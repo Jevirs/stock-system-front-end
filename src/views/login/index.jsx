@@ -52,16 +52,16 @@ const Login = (props) => {
   };
 
   if (token) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to='/dashboard' />;
   }
   return (
     <DocumentTitle title={"用户登录"}>
-      <div className="login-container">
-        <Form onSubmit={handleSubmit} className="content">
-          <div className="title">
+      <div className='login-container'>
+        <Form onSubmit={handleSubmit} className='content'>
+          <div className='title'>
             <h2>用户登录</h2>
           </div>
-          <Spin spinning={loading} tip="登录中...">
+          <Spin spinning={loading} tip='登录中...'>
             <Form.Item>
               {getFieldDecorator("username", {
                 rules: [
@@ -75,9 +75,9 @@ const Login = (props) => {
               })(
                 <Input
                   prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                    <Icon type='user' style={{ color: "rgba(0,0,0,.25)" }} />
                   }
-                  placeholder="用户名"
+                  placeholder='用户名'
                 />
               )}
             </Form.Item>
@@ -94,18 +94,18 @@ const Login = (props) => {
               })(
                 <Input
                   prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                    <Icon type='lock' style={{ color: "rgba(0,0,0,.25)" }} />
                   }
-                  type="password"
-                  placeholder="密码"
+                  type='password'
+                  placeholder='密码'
                 />
               )}
             </Form.Item>
             <Form.Item>
               <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
+                type='primary'
+                htmlType='submit'
+                className='login-form-button'
               >
                 登录
               </Button>
@@ -124,8 +124,4 @@ const Login = (props) => {
   );
 };
 
-const WrapLogin = Form.create()(Login);
-
-export default connect((state) => state.user, { login, getUserInfo })(
-  WrapLogin
-);
+export default connect((state) => state.user, { login, getUserInfo })(Login);

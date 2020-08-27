@@ -45,7 +45,7 @@ class Meun extends Component {
           pre.push(
             <Menu.Item key={item.path}>
               <Link to={item.path}>
-                {item.icon ? <Icon type={item.icon} /> : null}
+                {item.icon ? <item.icon /> : null}
                 <span>{item.title}</span>
               </Link>
             </Menu.Item>
@@ -113,10 +113,10 @@ class Meun extends Component {
     const path = this.props.location.pathname;
     const openKey = this.state.openKey;
     return (
-      <div className="sidebar-menu-container">
+      <div className='sidebar-menu-container'>
         <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={200}>
           <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppable">
+            <Droppable droppableId='droppable'>
               {(provided, snapshot) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {this.state.menuTreeNode.map((item, index) => (
@@ -132,8 +132,8 @@ class Meun extends Component {
                           {...provided.dragHandleProps}
                         >
                           <Menu
-                            mode="inline"
-                            theme="dark"
+                            mode='inline'
+                            theme='dark'
                             onSelect={this.handleMenuSelect}
                             selectedKeys={[path]}
                             defaultOpenKeys={openKey}

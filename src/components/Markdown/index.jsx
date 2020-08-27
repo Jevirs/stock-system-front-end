@@ -5,10 +5,10 @@ import { Editor } from "@toast-ui/react-editor";
 const Markdown = () => {
   return (
     <Editor
-      initialValue="hello 难凉热血!"
-      previewStyle="vertical"
-      height="600px"
-      initialEditType="markdown"
+      initialValue='hello!'
+      previewStyle='vertical'
+      height='600px'
+      initialEditType='markdown'
       useCommandShortcut={true}
     />
   );
