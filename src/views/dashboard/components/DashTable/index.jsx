@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Card, Button, Table, message, Input, Space } from "antd";
+import { Card, Button, Table, message, Input, Space, Form } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import AddPlanForm from "./add-plan-form";
 import EditPlanForm from "./edit-plan-form";
 import DataTable from "./data-table";
@@ -12,6 +13,7 @@ const StatisticGroup = (props) => {
   const [addPlanLoading, setAddLoading] = useState(false);
   const [editPlanLoading, setEditLoading] = useState(false);
   const [editData, setEditData] = useState({});
+  const [form] = Form.useForm();
 
   const tableData = [
     {
@@ -540,26 +542,44 @@ const StatisticGroup = (props) => {
   /* 表头 */
   const title = (
     <Space>
-      {/*       <Input prefix='股票代码' placeholder='请输入...' allowClear />
-
-      <Button type='primary' onClick={() => {}}>
-        查询
-      </Button> */}
-
-      <Button
-        type='primary'
-        onClick={() => {
-          setAddVisible(true);
+      <Form
+        form={form}
+        name='search'
+        layout='inline'
+        onFinish={() => {
+          console.log(form.getFieldsValue());
         }}
       >
-        新增买入计划
-      </Button>
+        <Form.Item name='code' label='股票代码' initialValue=''>
+          <Input
+            placeholder='请输入股票代码'
+            allowClear
+            style={{ width: 150 }}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            查询
+          </Button>
+        </Form.Item>
+      </Form>
     </Space>
+  );
+
+  const extra = (
+    <Button
+      icon={<PlusOutlined />}
+      onClick={() => {
+        setAddVisible(true);
+      }}
+    >
+      新增买入计划
+    </Button>
   );
 
   return (
     <>
-      <Card title={title}>
+      <Card title={title} extra={extra}>
         <DataTable data={tableData} onEdit={handleEditOpen} />
       </Card>
 

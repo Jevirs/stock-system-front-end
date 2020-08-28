@@ -23,10 +23,7 @@ const dataTable = (props) => {
             title='持仓金额'
             dataIndex='money'
             key='money'
-            align='center'
-            render={(value) => {
-              return <Statistic value={value} />;
-            }}
+            align='right'
           />
           <Column
             title='计划'
@@ -61,15 +58,7 @@ const dataTable = (props) => {
     >
       <Column title='股票代码' dataIndex='code' key='code' align='center' />
       <Column title='股票名称' dataIndex='name' key='name' align='center' />
-      <Column
-        title='总持仓金额'
-        dataIndex='money'
-        key='money'
-        align='center'
-        render={(value) => {
-          return <Statistic value={value} />;
-        }}
-      />
+      <Column title='总持仓金额' dataIndex='money' key='money' align='right' />
     </Table>
   );
 };

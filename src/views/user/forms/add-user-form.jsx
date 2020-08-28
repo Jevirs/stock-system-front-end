@@ -53,7 +53,7 @@ const AddUserForm = (props) => {
           name='role'
           rules={[{ required: true, message: "请选择用户权限" }]}
         >
-          <Select style={{ width: 200 }} placeholder='请选择用户权限'>
+          <Select placeholder='请选择用户权限'>
             <Select.Option value='admin'>管理员</Select.Option>
             <Select.Option value='operator'>交易员</Select.Option>
           </Select>

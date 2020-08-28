@@ -37,8 +37,8 @@ const addPlanForm = (props) => {
       destroyOnClose={true}
     >
       <Form form={form}>
-        <Form.Item label='方向:' name='action'>
-          <Select style={{ width: "150px" }} defaultValue='add'>
+        <Form.Item label='方向:' name='action' initialValue='add'>
+          <Select style={{ width: "150px" }}>
             {options.map((item) => {
               return (
                 <Select.Option value={item.value} key={item.value}>
@@ -48,10 +48,9 @@ const addPlanForm = (props) => {
             })}
           </Select>
         </Form.Item>
-        <Form.Item label='金额:' name='money'>
+        <Form.Item label='金额:' name='money' initialValue={10000}>
           <InputNumber
             style={{ width: "150px" }}
-            defaultValue={10000}
             formatter={(value) =>
               `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }

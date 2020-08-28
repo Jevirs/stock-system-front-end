@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Table, message, Divider, Popconfirm } from "antd";
+import { Card, Button, Table, message, Divider, Popconfirm, Space } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getUsers, editUser, deleteUser, addUser } from "@/api/user";
 import EditUserForm from "./forms/edit-user-form";
 import AddUserForm from "./forms/add-user-form";
@@ -100,16 +101,15 @@ const User = () => {
             width={200}
             align='center'
             render={(row) => (
-              <>
+              <Space>
                 <Button
-                  type='primary'
+                  shape='circle'
+                  icon={<EditOutlined />}
                   onClick={() => {
                     handleEditOpen(row);
                   }}
-                >
-                  编辑
-                </Button>
-                <Divider type='vertical' />
+                  title='编辑'
+                ></Button>
                 <Popconfirm
                   title='确认要删除该用户吗?'
                   onConfirm={() => {
@@ -119,9 +119,14 @@ const User = () => {
                   okText='是'
                   cancelText='否'
                 >
-                  <Button type='danger'>删除</Button>
+                  <Button
+                    type='danger'
+                    shape='circle'
+                    icon={<DeleteOutlined />}
+                    title='删除'
+                  ></Button>
                 </Popconfirm>
-              </>
+              </Space>
             )}
           />
         </Table>

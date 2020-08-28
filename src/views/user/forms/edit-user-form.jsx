@@ -54,16 +54,28 @@ const EditUserForm = (props) => {
       forceRender
     >
       <Form {...formItemLayout} form={form}>
-        <Form.Item label='用户名称:' name='name'>
+        <Form.Item
+          label='用户名称:'
+          name='name'
+          rules={[{ required: true, message: "请填写用户名" }]}
+        >
           <Input placeholder='请输入用户名称' />
         </Form.Item>
-        <Form.Item label='用户权限:' name='role'>
-          <Select style={{ width: 200 }} placeholder='请选择用户权限'>
+        <Form.Item
+          label='用户权限:'
+          name='role'
+          rules={[{ required: true, message: "请选择用户权限" }]}
+        >
+          <Select placeholder='请选择用户权限'>
             <Select.Option value='admin'>管理员</Select.Option>
             <Select.Option value='operator'>交易员</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label='用户密码:' name='password'>
+        <Form.Item
+          label='用户密码:'
+          name='password'
+          rules={[{ required: true, message: "请设置用户密码" }]}
+        >
           <Input placeholder='请输入密码' />
         </Form.Item>
         <Form.Item label='用户描述:' name='remark'>
