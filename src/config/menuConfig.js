@@ -13,16 +13,16 @@ const menuList = [
     roles: ["admin"]
   },
   {
-    title: "用户管理",
-    path: "/user",
-    icon: UserOutlined,
+    title: "账户管理",
+    path: "/account",
+    icon: ProfileOutlined,
     roles: ["admin"]
   },
   {
     title: "交易管理",
     path: "/trade",
     icon: PayCircleOutlined,
-    roles: ["admin", "user"]
+    roles: ["admin", "guest"]
   },
   {
     title: "板块管理",
@@ -31,10 +31,10 @@ const menuList = [
     roles: ["admin"]
   },
   {
-    title: "账户管理",
-    path: "/account",
-    icon: ProfileOutlined,
+    title: "用户管理",
+    path: "/user",
+    icon: UserOutlined,
     roles: ["admin"]
-  },
+  }
 ];
 export default menuList;

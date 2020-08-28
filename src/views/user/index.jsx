@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Card, Button, Table, message, Divider } from "antd";
-import { getUsers, deleteUser, editUser, addUser } from "@/api/user";
+import React, { useState, useEffect } from "react";
+import { Card, Button, Table, message, Divider, Popconfirm } from "antd";
+import { getUsers, editUser, deleteUser, addUser } from "@/api/user";
 import EditUserForm from "./forms/edit-user-form";
 import AddUserForm from "./forms/add-user-form";
 const { Column } = Table;
@@ -12,8 +12,6 @@ const User = () => {
   const [currentRowData, setCurrentRow] = useState({});
   const [addUserModalVisible, setAddVisible] = useState(false);
   const [addUserModalLoading, setAddLoading] = useState(false);
-  const addDialog = useRef();
-  const editDialog = useRef();
 
   useEffect(() => {
     initUsers();
@@ -26,78 +24,59 @@ const User = () => {
       setUsers(users);
     }
   };
-  const handleEditUser = (row) => {
+
+  /* 编辑 */
+  const handleEditOpen = (row) => {
     setCurrentRow(Object.assign({}, row));
     setEditVisible(true);
   };
-
-  const handleDeleteUser = (row) => {
-    const { id } = row;
-    deleteUser({ id }).then((res) => {
-      message.success("删除成功");
+  const handleEditCancel = () => {
+    setEditVisible(false);
+  };
+  const handleEditOk = (value, callback) => {
+    console.log(value);
+    setEditLoading(true);
+    editUser(value).then((res) => {
+      callback();
+      setEditLoading(false);
+      setEditVisible(false);
+      message.success("修改成功!");
       getUsers();
     });
   };
 
-  const handleEditUserOk = (_) => {
-    const { form } = editDialog.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      setEditLoading(true);
-      editUser(values)
-        .then((res) => {
-          form.resetFields();
-          setEditLoading(false);
-          setEditVisible(false);
-          message.success("编辑成功!");
-          getUsers();
-        })
-        .catch((e) => {
-          message.success("编辑失败,请重试!");
-        });
-    });
-  };
-
-  const handleCancel = (_) => {
+  /* 新增 */
+  const handleAddCancel = () => {
     setEditVisible(false);
     setAddVisible(false);
   };
-
-  const handleAddUser = (row) => {
+  const handleAddOpen = () => {
     setAddVisible(true);
   };
+  const handleAddOk = (value, callback) => {
+    console.log(value);
+    setAddLoading(true);
+    addUser(value).then((res) => {
+      callback();
+      setAddVisible(false);
+      setAddLoading(false);
+      message.success("添加成功!");
+      getUsers();
+    });
+  };
 
-  const handleAddUserOk = (_) => {
-    const { form } = addDialog.props;
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
-      setAddLoading(true);
-      addUser(values)
-        .then((response) => {
-          form.resetFields();
-          setAddVisible(false);
-          setAddLoading(false);
-          message.success("添加成功!");
-          getUsers();
-        })
-        .catch((e) => {
-          message.success("添加失败,请重试!");
-        });
+  /* 删除 */
+  const handleDelOk = (row) => {
+    console.log(row);
+    deleteUser(row).then((res) => {
+      message.success("删除成功!");
+      getUsers();
     });
   };
 
   const title = (
     <span>
-      <Button
-        type='primary'
-        onClick={() => {
-          handleAddUser();
-        }}
-      >
+      <Button type='primary' onClick={handleAddOpen}>
         添加用户
       </Button>
     </span>
@@ -107,9 +86,8 @@ const User = () => {
     <div className='app-container'>
       <Card title={title}>
         <Table bordered rowKey='id' dataSource={users} pagination={false}>
-          <Column title='用户ID' dataIndex='id' key='id' align='center' />
           <Column title='用户名称' dataIndex='name' key='name' align='center' />
-          <Column title='用户角色' dataIndex='role' key='role' align='center' />
+          <Column title='用户权限' dataIndex='role' key='role' align='center' />
           <Column
             title='用户描述'
             dataIndex='description'
@@ -119,46 +97,47 @@ const User = () => {
           <Column
             title='操作'
             key='action'
-            width={195}
+            width={200}
             align='center'
-            render={(text, row) => (
-              <span>
+            render={(row) => (
+              <>
                 <Button
                   type='primary'
-                  onClick={(row) => {
-                    handleEditUser(row);
+                  onClick={() => {
+                    handleEditOpen(row);
                   }}
                 >
                   编辑
                 </Button>
                 <Divider type='vertical' />
-                <Button
-                  type='primary'
-                  onClick={(row) => {
-                    handleDeleteUser(row);
+                <Popconfirm
+                  title='确认要删除该用户吗?'
+                  onConfirm={() => {
+                    handleDelOk(row);
                   }}
+                  onCancel={() => {}}
+                  okText='是'
+                  cancelText='否'
                 >
-                  删除
-                </Button>
-              </span>
+                  <Button type='danger'>删除</Button>
+                </Popconfirm>
+              </>
             )}
           />
         </Table>
       </Card>
       <EditUserForm
-        ref={editDialog}
         currentRowData={currentRowData}
         visible={editUserModalVisible}
         confirmLoading={editUserModalLoading}
-        onCancel={handleCancel}
-        onOk={handleEditUserOk}
+        onCancel={handleEditCancel}
+        onOk={handleEditOk}
       />
       <AddUserForm
-        ref={addDialog}
         visible={addUserModalVisible}
         confirmLoading={addUserModalLoading}
-        onCancel={handleCancel}
-        onOk={handleAddUserOk}
+        onCancel={handleAddCancel}
+        onOk={handleAddOk}
       />
     </div>
   );

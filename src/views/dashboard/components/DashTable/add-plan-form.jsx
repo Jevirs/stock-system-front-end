@@ -86,16 +86,7 @@ const addPlanForm = (props) => {
       destroyOnClose={true}
     >
       <Form form={form}>
-        <Form.Item
-          label='买入股票:'
-          name='id'
-          rules={[
-            {
-              required: true,
-              message: "请选择买入股票",
-            },
-          ]}
-        >
+        <Form.Item label='买入股票:' name='id'>
           <Select style={{ width: "150px" }}>
             {shareOptions.map((item) => {
               return (

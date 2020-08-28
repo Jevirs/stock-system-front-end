@@ -1,11 +1,13 @@
-import React, { useRef, forwardRef, useImperativeHandle } from "react";
+import React from "react";
 import { Form, Input, Select, Modal } from "antd";
+import { useEffect } from "react";
 const { TextArea } = Input;
 
-const EditUserForm = forwardRef((props, ref) => {
-  const formRef = useRef();
+const EditUserForm = (props) => {
   const { visible, onCancel, onOk, confirmLoading, currentRowData } = props;
   const { id } = currentRowData;
+
+  const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: {
       sm: { span: 4 },
@@ -14,43 +16,61 @@ const EditUserForm = forwardRef((props, ref) => {
       sm: { span: 16 },
     },
   };
-  const validate = () => {
-    console.log("validate");
-    return true;
+
+  useEffect(() => {
+    if (visible) {
+      console.log(currentRowData);
+      form.setFieldsValue({
+        ...currentRowData,
+      });
+    }
+  }, [form, visible, currentRowData]);
+
+  const handelOk = () => {
+    form
+      .validateFields()
+      .then((value) => {
+        onOk({ ...value, id }, () => {
+          form.resetFields();
+        });
+      })
+      .catch((info) => {
+        console.log("Validate Failed:", info);
+      });
   };
 
-  useImperativeHandle(ref, () => ({
-    validate: () => {
-      formRef.current.validate();
-    },
-  }));
+  const handelCancel = () => {
+    form.resetFields();
+    onCancel();
+  };
+
   return (
     <Modal
       title='编辑'
       visible={visible}
-      onCancel={onCancel}
-      onOk={onOk}
+      onCancel={handelCancel}
+      onOk={handelOk}
       confirmLoading={confirmLoading}
+      forceRender
     >
-      <Form {...formItemLayout}>
-        <Form.Item label='用户ID:'>
-          <Input disabled />
-        </Form.Item>
-        <Form.Item label='用户名称:'>
+      <Form {...formItemLayout} form={form}>
+        <Form.Item label='用户名称:' name='name'>
           <Input placeholder='请输入用户名称' />
         </Form.Item>
-        <Form.Item label='用户角色:'>
-          <Select style={{ width: 120 }} disabled={id === "admin"}>
-            <Select.Option value='admin'>admin</Select.Option>
-            <Select.Option value='editor'>editor</Select.Option>
-            <Select.Option value='guest'>guest</Select.Option>
+        <Form.Item label='用户权限:' name='role'>
+          <Select style={{ width: 200 }} placeholder='请选择用户权限'>
+            <Select.Option value='admin'>管理员</Select.Option>
+            <Select.Option value='operator'>交易员</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label='用户描述:'>
+        <Form.Item label='用户密码:' name='password'>
+          <Input placeholder='请输入密码' />
+        </Form.Item>
+        <Form.Item label='用户描述:' name='remark'>
           <TextArea rows={4} placeholder='请输入用户描述' />
         </Form.Item>
       </Form>
     </Modal>
   );
-});
+};
 export default EditUserForm;

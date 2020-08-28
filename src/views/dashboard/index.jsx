@@ -1,9 +1,18 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import { Space } from "antd";
+
 import StatisticGroup from "./components/StatisticGroup";
 import DashTable from "./components/DashTable";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const { role, token } = props;
+
+  if (token && role !== "admin") {
+    return <Redirect to='/trade' />;
+  }
+
   return (
     <div className='app-container'>
       <Space direction='vertical' size='large' style={{ width: "100%" }}>
@@ -14,4 +23,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default connect((state) => state.user)(Dashboard);

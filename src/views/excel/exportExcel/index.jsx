@@ -3,7 +3,6 @@ import {
   Table,
   Tag,
   Form,
-  Icon,
   Button,
   Input,
   Radio,
@@ -11,6 +10,7 @@ import {
   message,
   Collapse,
 } from "antd";
+import { FileOutlined } from "@ant-design/icons";
 
 import { excelList } from "@/api/excel";
 const { Panel } = Collapse;
@@ -108,7 +108,7 @@ class Excel extends Component {
     });
   };
   formatJson(filterVal, jsonData) {
-    return jsonData.map(v => filterVal.map(j => v[j]))
+    return jsonData.map((v) => filterVal.map((j) => v[j]));
   }
   filenameChange = (e) => {
     this.setState({
@@ -132,21 +132,19 @@ class Excel extends Component {
       onChange: this.onSelectChange,
     };
     return (
-      <div className="app-container">
+      <div className='app-container'>
         <Collapse defaultActiveKey={["1"]}>
-          <Panel header="导出选项" key="1">
-            <Form layout="inline">
-              <Form.Item label="文件名:">
+          <Panel header='导出选项' key='1'>
+            <Form layout='inline'>
+              <Form.Item label='文件名:'>
                 <Input
                   style={{ width: "250px" }}
-                  prefix={
-                    <Icon type="file" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="请输入文件名(默认excel-file)"
+                  prefix={<FileOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
+                  placeholder='请输入文件名(默认excel-file)'
                   onChange={this.filenameChange}
                 />
               </Form.Item>
-              <Form.Item label="单元格宽度是否自适应:">
+              <Form.Item label='单元格宽度是否自适应:'>
                 <Radio.Group
                   onChange={this.autoWidthChange}
                   value={this.state.autoWidth}
@@ -155,21 +153,21 @@ class Excel extends Component {
                   <Radio value={false}>否</Radio>
                 </Radio.Group>
               </Form.Item>
-              <Form.Item label="文件类型:">
+              <Form.Item label='文件类型:'>
                 <Select
-                  defaultValue="xlsx"
+                  defaultValue='xlsx'
                   style={{ width: 120 }}
                   onChange={this.bookTypeChange}
                 >
-                  <Select.Option value="xlsx">xlsx</Select.Option>
-                  <Select.Option value="csv">csv</Select.Option>
-                  <Select.Option value="txt">txt</Select.Option>
+                  <Select.Option value='xlsx'>xlsx</Select.Option>
+                  <Select.Option value='csv'>csv</Select.Option>
+                  <Select.Option value='txt'>txt</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item>
                 <Button
-                  type="primary"
-                  icon="file-excel"
+                  type='primary'
+                  icon='file-excel'
                   onClick={this.handleDownload.bind(null, "all")}
                 >
                   全部导出
@@ -177,8 +175,8 @@ class Excel extends Component {
               </Form.Item>
               <Form.Item>
                 <Button
-                  type="primary"
-                  icon="file-excel"
+                  type='primary'
+                  icon='file-excel'
                   onClick={this.handleDownload.bind(null, "selected")}
                 >
                   导出已选择项

@@ -10,10 +10,10 @@ import menuList from "@/config/menuConfig";
 const { Content } = Layout;
 
 const getPageTitle = (menuList, pathname) => {
-  let title = "Ant Design Pro";
+  let title = "下单系统";
   let item = getMenuItemInMenuListByProperty(menuList, "path", pathname);
   if (item) {
-    title = `${item.title} - Ant Design Pro`;
+    title = `${item.title} - 下单系统`;
   }
   return title;
 };
@@ -32,11 +32,16 @@ const LayoutContent = (props) => {
           <CSSTransition
             key={location.pathname}
             timeout={500}
-            classNames="fade"
+            classNames='fade'
             exit={false}
           >
             <Switch location={location}>
-              <Redirect exact from="/" to="/dashboard" />
+              {/* admin进入dashboard, guest进入trade */}
+              {role === "admin" ? (
+                <Redirect exact from='/' to='/dashboard' />
+              ) : (
+                <Redirect exact from='/' to='/trade' />
+              )}
               {routeList.map((route) => {
                 return (
                   handleFilter(route) && (
@@ -48,7 +53,7 @@ const LayoutContent = (props) => {
                   )
                 );
               })}
-              <Redirect to="/error/404" />
+              <Redirect to='/error/404' />
             </Switch>
           </CSSTransition>
         </TransitionGroup>

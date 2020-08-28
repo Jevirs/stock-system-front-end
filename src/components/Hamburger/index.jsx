@@ -1,16 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Icon } from "antd";
 import { toggleSiderBar } from "@/store/actions";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+
 import "./index.less";
 const Hamburger = (props) => {
   const { sidebarCollapsed, toggleSiderBar } = props;
   return (
-    <div className="hamburger-container">
-      <Icon
-        type={sidebarCollapsed ? "menu-unfold" : "menu-fold"}
-        onClick={toggleSiderBar}
-      />
+    <div className='hamburger-container'>
+      {sidebarCollapsed ? (
+        <MenuUnfoldOutlined onClick={toggleSiderBar} />
+      ) : (
+        <MenuFoldOutlined onClick={toggleSiderBar} />
+      )}
     </div>
   );
 };

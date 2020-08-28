@@ -1,19 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Icon, Menu, Dropdown, Modal, Layout, Avatar } from "antd";
-import { Link } from "react-router-dom";
+import { Menu, Dropdown, Modal, Layout, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { logout, getUserInfo } from "@/store/actions";
 import FullScreen from "@/components/FullScreen";
 import Settings from "@/components/Settings";
 import Hamburger from "@/components/Hamburger";
 import BreadCrumb from "@/components/BreadCrumb";
+import ResetPwd from "../ResetPwd";
+
 import "./index.less";
+import { useState } from "react";
 const { Header } = Layout;
 
 const LayoutHeader = (props) => {
   const {
     token,
-    avatar,
+    name,
     sidebarCollapsed,
     logout,
     getUserInfo,
@@ -21,6 +24,9 @@ const LayoutHeader = (props) => {
     fixedHeader,
   } = props;
   token && getUserInfo(token);
+
+  const [resetVisible, setResetVisible] = useState(false);
+
   const handleLogout = (token) => {
     Modal.confirm({
       title: "注销",
@@ -32,10 +38,16 @@ const LayoutHeader = (props) => {
       },
     });
   };
+  const handlePassword = () => {
+    setResetVisible(true);
+  };
   const onClick = ({ key }) => {
     switch (key) {
       case "logout":
         handleLogout(token);
+        break;
+      case "password":
+        handlePassword();
         break;
       default:
         break;
@@ -43,20 +55,10 @@ const LayoutHeader = (props) => {
   };
   const menu = (
     <Menu onClick={onClick}>
-      <Menu.Item key="dashboard">
-        <Link to="/dashboard">首页</Link>
-      </Menu.Item>
-      <Menu.Item key="project">
-        <a
-          target="_blank"
-          href="https://github.com/NLRX-WJC/react-antd-admin-template"
-          rel="noopener noreferrer"
-        >
-          项目地址
-        </a>
-      </Menu.Item>
+      <Menu.Item>{name}</Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="logout">注销</Menu.Item>
+      <Menu.Item key='password'>修改密码</Menu.Item>
+      <Menu.Item key='logout'>注销</Menu.Item>
     </Menu>
   );
   const computedStyle = () => {
@@ -89,19 +91,33 @@ const LayoutHeader = (props) => {
       >
         <Hamburger />
         <BreadCrumb />
-        <div className="right-menu">
+        <div className='right-menu'>
           <FullScreen />
           {showSettings ? <Settings /> : null}
-          <div className="dropdown-wrap">
+          <div className='dropdown-wrap'>
             <Dropdown overlay={menu}>
               <div>
-                <Avatar shape="square" size="medium" src={avatar} />
-                <Icon style={{ color: "rgba(0,0,0,.3)" }} type="caret-down" />
+                <Avatar
+                  icon={<UserOutlined />}
+                  style={{ background: "#1890ffb0" }}
+                >
+                  {name}
+                </Avatar>
               </div>
             </Dropdown>
           </div>
         </div>
       </Header>
+
+      <ResetPwd
+        visible={resetVisible}
+        onOk={() => {
+          setResetVisible(false);
+        }}
+        onCancel={() => {
+          setResetVisible(false);
+        }}
+      />
     </>
   );
 };
