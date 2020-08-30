@@ -10,21 +10,14 @@ const users = {
     role: "admin",
     name: "管理A",
     avatar: "https://s1.ax1x.com/2020/04/28/J5hUaT.jpg",
-    description: "拥有系统内所有菜单和路由权限",
-  },
-  "editor-token": {
-    id: "editor",
-    role: "editor",
-    name: "编辑员",
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description: "可以看到除户管理页面之外的所有页面",
+    description: "管理员A",
   },
   "guest-token": {
     id: "guest",
     role: "guest",
-    name: "游客",
+    name: "操作员A",
     avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description: "仅能看到Dashboard、开发文档、权限测试和关于作者四个页面",
+    description: "华西证券VIP操作员",
   },
 };
 
@@ -94,18 +87,18 @@ export default {
       };
     } else {
       return {
-        status: 0
+        status: 0,
       };
     }
   },
   addUser: (config) => {
     const data = JSON.parse(config.body);
     const { id } = data;
-    tokens[id] = `${id}-token`
+    tokens[id] = `${id}-token`;
     users[`${id}-token`] = {
       ...users["guest-token"],
-      ...data
-    }
+      ...data,
+    };
     return {
       status: 0,
     };
