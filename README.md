@@ -23,28 +23,5 @@
 ├── .env.development          # 开发环境变量配置
 ├── .env.production           # 生产环境变量配置
 ├── config-overrides.js       # 对cra的webpack自定义配置
-├── deploy.sh                 # CI部署脚本
-├── .travis.yml               # 自动化CI配置
 └── package.json              # package.json
 ```
-
-# 安装
-
-```shell
-# 克隆项目
-git clone https://github.com/NLRX-WJC/react-antd-admin-template.git
-
-# 进入项目目录
-cd react-antd-admin-template
-
-# 安装依赖
-npm install
-
-# 切换淘宝源，解决 npm 下载速度慢的问题
-npm install --registry=https://registry.npm.taobao.org
-
-# 启动服务
-npm start
-```
-
-启动完成后会自动打开浏览器访问 [http://localhost:3000](http://localhost:3000)， 你看到下面的页面就代表操作成功了。

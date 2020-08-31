@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Table, message, Divider, Popconfirm, Space } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Card, Button, message, Space, Form, Input } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+
 import { getUsers, editUser, deleteUser, addUser } from "@/api/user";
 import EditUserForm from "./forms/edit-user-form";
 import AddUserForm from "./forms/add-user-form";
-const { Column } = Table;
+import UserTable from "./forms/user-table";
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -13,6 +14,8 @@ const User = () => {
   const [currentRowData, setCurrentRow] = useState({});
   const [addUserModalVisible, setAddVisible] = useState(false);
   const [addUserModalLoading, setAddLoading] = useState(false);
+
+  const [form] = Form.useForm();
 
   useEffect(() => {
     initUsers();
@@ -76,8 +79,34 @@ const User = () => {
   };
 
   const title = (
+    <Space>
+      <Form
+        form={form}
+        name='search'
+        layout='inline'
+        onFinish={() => {
+          console.log(form.getFieldsValue());
+        }}
+      >
+        <Form.Item name='name' label='用户名称' initialValue=''>
+          <Input
+            placeholder='请输入用户名称'
+            allowClear
+            style={{ width: 150 }}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            查询
+          </Button>
+        </Form.Item>
+      </Form>
+    </Space>
+  );
+
+  const extra = (
     <span>
-      <Button type='primary' onClick={handleAddOpen}>
+      <Button icon={<PlusOutlined />} onClick={handleAddOpen}>
         添加用户
       </Button>
     </span>
@@ -85,51 +114,12 @@ const User = () => {
 
   return (
     <div className='app-container'>
-      <Card title={title}>
-        <Table bordered rowKey='id' dataSource={users} pagination={false}>
-          <Column title='用户名称' dataIndex='name' key='name' align='center' />
-          <Column title='用户权限' dataIndex='role' key='role' align='center' />
-          <Column
-            title='用户描述'
-            dataIndex='description'
-            key='description'
-            align='center'
-          />
-          <Column
-            title='操作'
-            key='action'
-            width={200}
-            align='center'
-            render={(row) => (
-              <Space>
-                <Button
-                  shape='circle'
-                  icon={<EditOutlined />}
-                  onClick={() => {
-                    handleEditOpen(row);
-                  }}
-                  title='编辑'
-                ></Button>
-                <Popconfirm
-                  title='确认要删除该用户吗?'
-                  onConfirm={() => {
-                    handleDelOk(row);
-                  }}
-                  onCancel={() => {}}
-                  okText='是'
-                  cancelText='否'
-                >
-                  <Button
-                    type='danger'
-                    shape='circle'
-                    icon={<DeleteOutlined />}
-                    title='删除'
-                  ></Button>
-                </Popconfirm>
-              </Space>
-            )}
-          />
-        </Table>
+      <Card title={title} extra={extra}>
+        <UserTable
+          users={users}
+          onEdit={handleEditOpen}
+          onDelete={handleDelOk}
+        />
       </Card>
       <EditUserForm
         currentRowData={currentRowData}

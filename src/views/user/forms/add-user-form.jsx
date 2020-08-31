@@ -34,7 +34,7 @@ const AddUserForm = (props) => {
 
   return (
     <Modal
-      title='编辑'
+      title='添加用户'
       visible={visible}
       onCancel={handelCancel}
       onOk={handelOk}

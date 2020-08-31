@@ -46,7 +46,7 @@ const EditUserForm = (props) => {
 
   return (
     <Modal
-      title='编辑'
+      title='编辑用户'
       visible={visible}
       onCancel={handelCancel}
       onOk={handelOk}

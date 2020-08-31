@@ -55,6 +55,13 @@ const ResetPwd = (props) => {
     >
       <Form {...formItemLayout} form={form}>
         <Form.Item
+          label='旧密码:'
+          name='old'
+          rules={[{ required: true, message: "请填写旧密码" }]}
+        >
+          <Input placeholder='请填写旧密码' type='password' />
+        </Form.Item>
+        <Form.Item
           label='新密码:'
           name='password'
           rules={[{ required: true, message: "请填写新密码" }]}
