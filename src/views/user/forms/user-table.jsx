@@ -30,7 +30,7 @@ const UserTable = (props) => {
               title='编辑'
             ></Button>
             <Popconfirm
-              title='确认要删除该用户吗?'
+              title='确认要删除此用户吗?'
               onConfirm={() => {
                 props.onDelete(row);
               }}

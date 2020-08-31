@@ -48,3 +48,12 @@ export function getMenuItemInMenuListByProperty(menuList, key, value) {
   }
   return res;
 }
+
+export function formatNumber(num) {
+  if (isNaN(num)) return '--';
+  return String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+export function parseNumber(string) {
+  return string.replace(/\$\s?|(,*)/g, "")
+}

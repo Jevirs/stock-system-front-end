@@ -26,7 +26,7 @@ const EditUserForm = (props) => {
     }
   }, [form, visible, currentRowData]);
 
-  const handelOk = () => {
+  const handleOk = () => {
     form
       .validateFields()
       .then((value) => {
@@ -39,7 +39,7 @@ const EditUserForm = (props) => {
       });
   };
 
-  const handelCancel = () => {
+  const handleCancel = () => {
     form.resetFields();
     onCancel();
   };
@@ -48,8 +48,8 @@ const EditUserForm = (props) => {
     <Modal
       title='编辑用户'
       visible={visible}
-      onCancel={handelCancel}
-      onOk={handelOk}
+      onCancel={handleCancel}
+      onOk={handleOk}
       confirmLoading={confirmLoading}
       forceRender
     >

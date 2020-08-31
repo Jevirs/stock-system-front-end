@@ -18,10 +18,10 @@ const User = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    initUsers();
+    getUserList();
   }, []);
 
-  const initUsers = async () => {
+  const getUserList = async () => {
     const result = await getUsers();
     const { users, status } = result.data;
     if (status === 0) {
@@ -45,7 +45,7 @@ const User = () => {
       setEditLoading(false);
       setEditVisible(false);
       message.success("修改成功!");
-      getUsers();
+      getUserList();
     });
   };
 

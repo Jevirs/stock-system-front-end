@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Select, Modal, InputNumber } from "antd";
 
-const addPlanForm = (props) => {
+const EditPlanForm = (props) => {
   const [form] = Form.useForm();
   const { visible, onCancel, onOk, confirmLoading, data } = props;
 
@@ -62,4 +62,4 @@ const addPlanForm = (props) => {
   );
 };
 
-export default addPlanForm;
+export default EditPlanForm;

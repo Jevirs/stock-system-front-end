@@ -14,7 +14,7 @@ const AddUserForm = (props) => {
     },
   };
 
-  const handelOk = () => {
+  const handleOk = () => {
     form
       .validateFields()
       .then((values) => {
@@ -27,7 +27,7 @@ const AddUserForm = (props) => {
       });
   };
 
-  const handelCancel = () => {
+  const handleCancel = () => {
     form.resetFields();
     onCancel();
   };
@@ -36,8 +36,8 @@ const AddUserForm = (props) => {
     <Modal
       title='添加用户'
       visible={visible}
-      onCancel={handelCancel}
-      onOk={handelOk}
+      onCancel={handleCancel}
+      onOk={handleOk}
       confirmLoading={confirmLoading}
     >
       <Form {...formItemLayout} form={form}>

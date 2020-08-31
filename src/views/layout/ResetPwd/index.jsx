@@ -15,7 +15,7 @@ const ResetPwd = (props) => {
     },
   };
 
-  const handelOk = () => {
+  const handleOk = () => {
     form
       .validateFields()
       .then((value) => {
@@ -32,7 +32,7 @@ const ResetPwd = (props) => {
       });
   };
 
-  const handelCancel = () => {
+  const handleCancel = () => {
     form.resetFields();
     onCancel();
   };
@@ -49,8 +49,8 @@ const ResetPwd = (props) => {
     <Modal
       title='修改密码'
       visible={visible}
-      onCancel={handelCancel}
-      onOk={handelOk}
+      onCancel={handleCancel}
+      onOk={handleOk}
       confirmLoading={loading}
     >
       <Form {...formItemLayout} form={form}>

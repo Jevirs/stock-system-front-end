@@ -1,6 +1,7 @@
 import React from "react";
-import { Table, Button, Statistic } from "antd";
+import { Table, Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import { formatNumber } from "@/utils";
 
 const { Column } = Table;
 
@@ -13,33 +14,36 @@ const dataTable = (props) => {
       <div style={{ padding: "20px" }}>
         <Table
           bordered
-          rowKey="name"
+          rowKey='name'
           dataSource={record.account}
           pagination={false}
         >
-          <Column title="账户" dataIndex="name" key="name" align="center" />
+          <Column title='账户' dataIndex='name' key='name' align='center' />
           <Column
-            title="交易员"
-            dataIndex="operator"
-            key="operator"
-            align="center"
+            title='交易员'
+            dataIndex='operator'
+            key='operator'
+            align='center'
           />
           <Column
-            title="持仓金额"
-            dataIndex="money"
-            key="money"
-            align="right"
+            title='持仓金额'
+            dataIndex='money'
+            key='money'
+            align='right'
+            render={(text) => {
+              return formatNumber(text);
+            }}
           />
           <Column
-            title="计划"
-            dataIndex="plan"
-            key="plan"
-            align="center"
+            title='计划'
+            dataIndex='plan'
+            key='plan'
+            align='center'
             render={() => {
               return (
                 <Button
-                  type="primary"
-                  shape="circle"
+                  type='primary'
+                  shape='circle'
                   icon={<EditOutlined />}
                   onClick={() => {
                     onEdit(record);
@@ -56,14 +60,22 @@ const dataTable = (props) => {
   return (
     <Table
       bordered
-      rowKey="key"
+      rowKey='key'
       dataSource={data}
       pagination={true}
       expandable={{ expandedRowRender }}
     >
-      <Column title="股票代码" dataIndex="code" key="code" align="center" />
-      <Column title="股票名称" dataIndex="name" key="name" align="center" />
-      <Column title="总持仓金额" dataIndex="money" key="money" align="right" />
+      <Column title='股票代码' dataIndex='code' key='code' align='center' />
+      <Column title='股票名称' dataIndex='name' key='name' align='center' />
+      <Column
+        title='总持仓金额'
+        dataIndex='money'
+        key='money'
+        align='right'
+        render={(text) => {
+          return formatNumber(text);
+        }}
+      />
     </Table>
   );
 };

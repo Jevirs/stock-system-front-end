@@ -5,8 +5,6 @@ import AddPlanForm from "./add-plan-form";
 import EditPlanForm from "./edit-plan-form";
 import DataTable from "./data-table";
 
-const { Column } = Table;
-
 const StatisticGroup = (props) => {
   const [addPlanVisible, setAddVisible] = useState(false);
   const [editPlanVisible, setEditVisible] = useState(false);
