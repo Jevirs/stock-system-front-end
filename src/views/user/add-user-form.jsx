@@ -18,29 +18,23 @@ const AddUserForm = (props) => {
     form
       .validateFields()
       .then((values) => {
-        onOk(values, () => {
-          form.resetFields();
-        });
+        onOk(values);
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
 
-  const handleCancel = () => {
-    form.resetFields();
-    onCancel();
-  };
-
   return (
     <Modal
       title='添加用户'
       visible={visible}
-      onCancel={handleCancel}
+      onCancel={onCancel}
       onOk={handleOk}
       confirmLoading={confirmLoading}
+      destroyOnClose={true}
     >
-      <Form {...formItemLayout} form={form}>
+      <Form {...formItemLayout} form={form} preserve={false}>
         <Form.Item
           label='用户名称:'
           name='name'

@@ -37,11 +37,10 @@ const StatisticGroup = (props) => {
     message.success("查询成功!");
   };
 
-  const handleAddOk = (value, callback) => {
+  const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
     addUser(value).then((res) => {
-      callback();
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");
@@ -49,11 +48,10 @@ const StatisticGroup = (props) => {
     });
   };
 
-  const handleEditOk = (value, callback) => {
+  const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
     addUser(value).then((res) => {
-      callback();
       setEditVisible(false);
       setEditLoading(false);
       message.success("编辑成功!");

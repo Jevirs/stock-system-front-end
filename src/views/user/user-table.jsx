@@ -21,23 +21,22 @@ const UserTable = (props) => {
     },
     {
       title: "操作",
-      dataIndex: "name",
       align: "center",
       width: "200px",
-      render: (row) => (
+      render: (record) => (
         <Space>
           <Button
             shape='circle'
             icon={<EditOutlined />}
             onClick={() => {
-              props.onEdit(row);
+              props.onEdit(record);
             }}
             title='编辑'
           ></Button>
           <Popconfirm
             title='确认要删除此用户吗?'
             onConfirm={() => {
-              props.onDelete(row);
+              props.onDelete(record);
             }}
             onCancel={() => {}}
             okText='是'

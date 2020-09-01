@@ -27,29 +27,23 @@ const AddSectorForm = (props) => {
     form
       .validateFields()
       .then((values) => {
-        onOk(values, () => {
-          form.resetFields();
-        });
+        onOk(values);
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
 
-  const handleCancel = () => {
-    form.resetFields();
-    onCancel();
-  };
-
   return (
     <Modal
       title='编辑板块'
       visible={visible}
-      onCancel={handleCancel}
+      onCancel={onCancel}
       onOk={handleOk}
       confirmLoading={confirmLoading}
+      destroyOnClose={true}
     >
-      <Form {...formItemLayout} form={form}>
+      <Form {...formItemLayout} form={form} preserve={false}>
         <Form.Item
           label='板块名称:'
           name='name'

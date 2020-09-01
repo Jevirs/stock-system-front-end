@@ -506,27 +506,25 @@ const StatisticGroup = (props) => {
   ];
 
   /* 添加计划 */
-  const handleAddOk = (data, callback) => {
+  const handleAddOk = (data) => {
     setAddLoading(true);
     setTimeout(() => {
       /* do add api */
       console.log("do add api");
       setAddLoading(false);
       setAddVisible(false);
-      callback();
       message.success("新增计划成功");
     }, 3000);
   };
 
   /* 添加计划 */
-  const handleEditOk = (data, callback) => {
+  const handleEditOk = (data) => {
     setEditLoading(true);
     setTimeout(() => {
       /* do add api */
       console.log("do add api");
       setEditLoading(false);
       setEditVisible(false);
-      callback();
       message.success("新增计划成功");
     }, 3000);
   };

@@ -32,11 +32,6 @@ const ResetPwd = (props) => {
       });
   };
 
-  const handleCancel = () => {
-    form.resetFields();
-    onCancel();
-  };
-
   const validatePwd = (rule, value, callback) => {
     if (value !== form.getFieldValue("password")) {
       callback(new Error("两次密码不一致"));
@@ -49,11 +44,12 @@ const ResetPwd = (props) => {
     <Modal
       title='修改密码'
       visible={visible}
-      onCancel={handleCancel}
+      onCancel={onCancel}
       onOk={handleOk}
       confirmLoading={loading}
+      destroyOnClose={true}
     >
-      <Form {...formItemLayout} form={form}>
+      <Form {...formItemLayout} form={form} preserve={false}>
         <Form.Item
           label='旧密码:'
           name='old'

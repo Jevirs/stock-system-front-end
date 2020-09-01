@@ -28,17 +28,12 @@ const EditAccountForm = (props) => {
       width='720px'
       title='编辑账户'
       visible={visible}
-      onCancel={() => {
-        form.resetFields();
-        onCancel();
-      }}
+      onCancel={onCancel}
       onOk={() => {
         form
           .validateFields()
           .then((values) => {
-            onOk(values, () => {
-              form.resetFields();
-            });
+            onOk(values);
           })
           .catch((info) => {
             console.log("Validate Failed:", info);
@@ -47,7 +42,7 @@ const EditAccountForm = (props) => {
       confirmLoading={loading}
       destroyOnClose={true}
     >
-      <Form form={form} {...formItemLayout}>
+      <Form form={form} {...formItemLayout} preserve={false}>
         <Form.Item label='账户名称:' name='name'>
           <Input placeholder='请输入账户名称'></Input>
         </Form.Item>

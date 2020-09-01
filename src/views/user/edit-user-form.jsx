@@ -19,41 +19,33 @@ const EditUserForm = (props) => {
 
   useEffect(() => {
     if (visible) {
-      console.log(currentRowData);
       form.setFieldsValue({
         ...currentRowData,
       });
     }
-  }, [form, visible, currentRowData]);
+  }, [visible]);
 
   const handleOk = () => {
     form
       .validateFields()
       .then((value) => {
-        onOk({ ...value, id }, () => {
-          form.resetFields();
-        });
+        onOk({ ...value, id });
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
 
-  const handleCancel = () => {
-    form.resetFields();
-    onCancel();
-  };
-
   return (
     <Modal
       title='编辑用户'
       visible={visible}
-      onCancel={handleCancel}
+      onCancel={onCancel}
       onOk={handleOk}
       confirmLoading={confirmLoading}
-      forceRender
+      destroyOnClose={true}
     >
-      <Form {...formItemLayout} form={form}>
+      <Form {...formItemLayout} form={form} preserve={false}>
         <Form.Item
           label='用户名称:'
           name='name'

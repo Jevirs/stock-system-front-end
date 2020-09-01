@@ -37,11 +37,10 @@ const User = () => {
   const handleEditCancel = () => {
     setEditVisible(false);
   };
-  const handleEditOk = (value, callback) => {
+  const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
     editUser(value).then((res) => {
-      callback();
       setEditLoading(false);
       setEditVisible(false);
       message.success("修改成功!");
@@ -57,11 +56,10 @@ const User = () => {
   const handleAddOpen = () => {
     setAddVisible(true);
   };
-  const handleAddOk = (value, callback) => {
+  const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
     addUser(value).then((res) => {
-      callback();
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");

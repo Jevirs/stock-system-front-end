@@ -97,6 +97,7 @@ const SettingSectorForm = (props) => {
       onCancel={onCancel}
       onOk={onOk}
       confirmLoading={confirmLoading}
+      destroyOnClose={true}
     >
       <TableTransfer
         dataSource={mockData}

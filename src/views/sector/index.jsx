@@ -34,11 +34,10 @@ const Sector = () => {
   };
 
   /* 新增 */
-  const handleAddOk = (value, callback) => {
+  const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
     addUser(value).then((res) => {
-      callback();
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");
@@ -47,11 +46,10 @@ const Sector = () => {
   };
 
   /* 编辑 */
-  const handleEditOk = (value, callback) => {
+  const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
     editUser(value).then((res) => {
-      callback();
       setEditLoading(false);
       setEditVisible(false);
       message.success("修改成功!");
