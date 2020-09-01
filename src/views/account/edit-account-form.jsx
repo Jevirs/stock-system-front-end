@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Form, Input, InputNumber, Select } from "antd";
 
-const AddAccountForm = (props) => {
+const EditAccountForm = (props) => {
   const [form] = Form.useForm();
-  const { visible, onOk, onCancel, loading } = props;
+  const { visible, onOk, onCancel, loading, currentRowData } = props;
 
   const formItemLayout = {
     labelCol: {
@@ -14,10 +14,19 @@ const AddAccountForm = (props) => {
     },
   };
 
+  useEffect(() => {
+    if (visible) {
+      console.log(currentRowData);
+      form.setFieldsValue({
+        ...currentRowData,
+      });
+    }
+  }, [form, visible, currentRowData]);
+
   return (
     <Modal
       width='720px'
-      title='新增账户'
+      title='编辑账户'
       visible={visible}
       onCancel={() => {
         form.resetFields();
@@ -44,7 +53,7 @@ const AddAccountForm = (props) => {
         </Form.Item>
 
         <Form.Item label='资金账号:' name='account'>
-          <Input placeholder='请输入资金账号'></Input>
+          <Input placeholder='请输入资金账号' disabled={true}></Input>
         </Form.Item>
         <Form.Item label='初始资金' name='money'>
           <InputNumber
@@ -59,7 +68,7 @@ const AddAccountForm = (props) => {
         </Form.Item>
 
         <Form.Item label='券商' name='company'>
-          <Select placeholder='请选择券商'>
+          <Select placeholder='请选择券商' disabled={true}>
             <Select.Option key={1}>华西证券</Select.Option>
             <Select.Option key={2}>华东证券</Select.Option>
             <Select.Option key={3}>华南证券</Select.Option>
@@ -154,4 +163,4 @@ const AddAccountForm = (props) => {
   );
 };
 
-export default AddAccountForm;
+export default EditAccountForm;

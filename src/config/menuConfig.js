@@ -26,7 +26,7 @@ const menuList = [
   },
   {
     title: "板块管理",
-    path: "/plate",
+    path: "/sector",
     icon: MenuOutlined,
     roles: ["admin"]
   },

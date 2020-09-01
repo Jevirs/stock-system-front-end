@@ -3,14 +3,20 @@ import { Card, Button, Table, message, Form, Input, Space, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import AccountTable from "./account-table";
 import AddAccountForm from "./add-account-form";
+import EditAccountForm from "./edit-account-form";
+import DetailTable from "./detail-table";
 
 import { getUsers, addUser } from "@/api/account";
 
 const StatisticGroup = (props) => {
   const [users, setUsers] = useState([]);
+  const [viewVisible, setViewVisible] = useState(false);
+  const [viewLoading, setViewLoading] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
+  const [currentRow, setCurrentRow] = useState({});
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -41,6 +47,29 @@ const StatisticGroup = (props) => {
       message.success("添加成功!");
       getUserList();
     });
+  };
+
+  const handleEditOk = (value, callback) => {
+    console.log(value);
+    setEditLoading(true);
+    addUser(value).then((res) => {
+      callback();
+      setEditVisible(false);
+      setEditLoading(false);
+      message.success("编辑成功!");
+      getUserList();
+    });
+  };
+
+  const handleDelete = (value) => {
+    if (value.money > 0) {
+      message.warn("此账户仍有持仓，无法删除");
+    } else {
+      addUser(value).then((res) => {
+        message.success("删除!");
+        getUserList();
+      });
+    }
   };
 
   /* 表头 */
@@ -348,19 +377,19 @@ const StatisticGroup = (props) => {
   ];
 
   return (
-    <>
+    <div className='app-container'>
       <Card title={title} extra={extra}>
         <AccountTable
           data={data}
           onView={(row) => {
-            console.log(row);
+            setCurrentRow(Object.assign({}, row));
+            setViewVisible(true);
           }}
           onEdit={(row) => {
-            console.log(row);
+            setCurrentRow(Object.assign({}, row));
+            setEditVisible(true);
           }}
-          onDelete={(row) => {
-            console.log(row);
-          }}
+          onDelete={handleDelete}
         />
       </Card>
 
@@ -372,7 +401,30 @@ const StatisticGroup = (props) => {
           setAddVisible(false);
         }}
       />
-    </>
+
+      <EditAccountForm
+        currentRowData={currentRow}
+        visible={editVisible}
+        loading={editLoading}
+        onOk={handleEditOk}
+        onCancel={() => {
+          setEditVisible(false);
+        }}
+      />
+
+      <DetailTable
+        currentRowData={currentRow}
+        visible={viewVisible}
+        loading={viewLoading}
+        onCancel={() => {
+          setViewVisible(false);
+        }}
+        onOk={(value) => {
+          console.log(value);
+          setViewVisible(false);
+        }}
+      />
+    </div>
   );
 };
 

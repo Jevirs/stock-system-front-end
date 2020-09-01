@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Form, Select, Modal, Table, InputNumber } from "antd";
+import EditableTable from "@/components/EditableTable";
 import { formatNumber } from "@/utils";
-import "./style.css";
 
 const AddPlanForm = (props) => {
   const DATA = [
@@ -66,105 +66,6 @@ const AddPlanForm = (props) => {
     },
   };
 
-  const EditableContext = React.createContext();
-
-  const EditableRow = ({ index, ...props }) => {
-    const [form] = Form.useForm();
-    return (
-      <Form form={form} component={false}>
-        <EditableContext.Provider value={form}>
-          <tr {...props} />
-        </EditableContext.Provider>
-      </Form>
-    );
-  };
-
-  const EditableCell = ({
-    title,
-    editable,
-    children,
-    dataIndex,
-    record,
-    handleSave,
-    ...restProps
-  }) => {
-    const [editing, setEditing] = useState(false);
-    const inputRef = useRef();
-    const form = useContext(EditableContext);
-    useEffect(() => {
-      if (editing) {
-        inputRef.current.focus();
-      }
-    }, [editing]);
-
-    const toggleEdit = () => {
-      setEditing(!editing);
-      form.setFieldsValue({
-        [dataIndex]: record[dataIndex],
-      });
-    };
-
-    const save = async (e) => {
-      try {
-        const values = await form.validateFields();
-        toggleEdit();
-        handleSave({ ...record, ...values });
-      } catch (errInfo) {
-        console.log("Save failed:", errInfo);
-      }
-    };
-
-    let childNode = children;
-
-    if (editable) {
-      childNode = editing ? (
-        <Form.Item
-          style={{
-            margin: 0,
-          }}
-          name={dataIndex}
-          rules={[
-            {
-              required: true,
-              message: `请填写${title}`,
-            },
-          ]}
-        >
-          <InputNumber
-            step={1000}
-            formatter={(value) =>
-              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            ref={inputRef}
-            onPressEnter={save}
-            onBlur={save}
-            style={{ width: "150px" }}
-          />
-        </Form.Item>
-      ) : (
-        <div
-          className='editable-cell-value-wrap'
-          style={{
-            paddingRight: 24,
-          }}
-          onClick={toggleEdit}
-        >
-          {children}
-        </div>
-      );
-    }
-
-    return <td {...restProps}>{childNode}</td>;
-  };
-
-  /* 表格渲染组件 */
-  const components = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
-    },
-  };
   const columns = [
     {
       title: "账户名称",
@@ -180,6 +81,7 @@ const AddPlanForm = (props) => {
       },
     },
     {
+      width: "35%",
       title: "计划买入仓位",
       dataIndex: "position",
       align: "right",
@@ -187,34 +89,34 @@ const AddPlanForm = (props) => {
       render: (text) => {
         return formatNumber(text);
       },
-      width: "35%",
+      rules: [
+        {
+          required: true,
+          message: `请填写计划买入仓位`,
+        },
+      ],
+      handleSave: (row) => {
+        const newData = [...source];
+        const index = newData.findIndex((item) => row.key === item.key);
+        const item = newData[index];
+        newData.splice(index, 1, { ...item, ...row });
+        setSource(newData);
+      },
+      inputRender: (props) => {
+        return (
+          <InputNumber
+            step={1000}
+            formatter={(value) =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            style={{ width: "150px" }}
+            {...props}
+          />
+        );
+      },
     },
   ];
-  const wrapColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        handleSave: handleSave,
-      }),
-    };
-  });
-
-  /* 更新数据 */
-  const handleSave = (row) => {
-    const newData = [...source];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, { ...item, ...row });
-    setSource(newData);
-  };
 
   const totalDiv = () => {
     const total = source.reduce((acc, cur) => acc + cur.position, 0);
@@ -259,14 +161,12 @@ const AddPlanForm = (props) => {
           </Select>
         </Form.Item>
         <Form.Item label='账户选择:' name='accounts'>
-          <Table
-            rowClassName={() => "editable-row"}
+          <EditableTable
             rowSelection={{ ...rowSelection }}
             dataSource={source}
-            components={components}
-            columns={wrapColumns}
+            columns={columns}
             pagination={false}
-          ></Table>
+          ></EditableTable>
         </Form.Item>
       </Form>
       {totalDiv()}

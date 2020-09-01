@@ -3,9 +3,9 @@ import { Card, Button, message, Space, Form, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 import { getUsers, editUser, deleteUser, addUser } from "@/api/user";
-import EditUserForm from "./forms/edit-user-form";
-import AddUserForm from "./forms/add-user-form";
-import UserTable from "./forms/user-table";
+import EditUserForm from "./edit-user-form";
+import AddUserForm from "./add-user-form";
+import UserTable from "./user-table";
 
 const User = () => {
   const [users, setUsers] = useState([]);

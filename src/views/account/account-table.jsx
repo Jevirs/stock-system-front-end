@@ -24,12 +24,7 @@ const dataTable = (props) => {
   };
 
   const handleDelete = (row) => {
-    console.log(row);
-    if (row.money > 0) {
-      message.warn("此账户仍有持仓，无法删除");
-    } else {
-      onDelete(row);
-    }
+    onDelete(row);
   };
 
   return (
