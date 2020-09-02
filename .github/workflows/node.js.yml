@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x]
   
 
     steps:
@@ -42,4 +42,9 @@ jobs:
     - run: npm run build
 
 
-    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.1.4
+      with:
+      # Artifact name
+        name: 'output'
+        path: './build'
