@@ -1,22 +1,26 @@
 import React from "react";
 import { Table, Space, Button, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { cnRoleDict } from "@/utils/enum";
 
 const UserTable = (props) => {
   const columns = [
     {
       title: "用户名称",
-      dataIndex: "name",
+      dataIndex: "user_name",
       align: "center",
     },
     {
       title: "用户权限",
-      dataIndex: "role",
+      dataIndex: "role_id",
       align: "center",
+      render: (text) => {
+        return cnRoleDict[text];
+      },
     },
     {
       title: "用户描述",
-      dataIndex: "description",
+      dataIndex: "remark",
       align: "center",
     },
     {

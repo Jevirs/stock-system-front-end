@@ -23,9 +23,9 @@ const User = () => {
 
   const getUserList = async () => {
     const result = await getUsers();
-    const { users, status } = result.data;
+    const { data, status } = result.data;
     if (status === 0) {
-      setUsers(users);
+      setUsers(data);
     }
   };
 
@@ -80,13 +80,12 @@ const User = () => {
     <Space>
       <Form
         form={form}
-        name='search'
         layout='inline'
         onFinish={() => {
           console.log(form.getFieldsValue());
         }}
       >
-        <Form.Item name='name' label='用户名称' initialValue=''>
+        <Form.Item name='user_name' label='用户名称' initialValue=''>
           <Input
             placeholder='请输入用户名称'
             allowClear

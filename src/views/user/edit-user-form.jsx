@@ -48,24 +48,24 @@ const EditUserForm = (props) => {
       <Form {...formItemLayout} form={form} preserve={false}>
         <Form.Item
           label='用户名称:'
-          name='name'
+          name='user_name'
           rules={[{ required: true, message: "请填写用户名" }]}
         >
           <Input placeholder='请输入用户名称' />
         </Form.Item>
         <Form.Item
           label='用户权限:'
-          name='role'
+          name='role_id'
           rules={[{ required: true, message: "请选择用户权限" }]}
         >
           <Select placeholder='请选择用户权限'>
-            <Select.Option value='admin'>管理员</Select.Option>
-            <Select.Option value='operator'>交易员</Select.Option>
+            <Select.Option value='1'>管理员</Select.Option>
+            <Select.Option value='2'>交易员</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item
           label='用户密码:'
-          name='password'
+          name='user_passwd'
           rules={[{ required: true, message: "请设置用户密码" }]}
         >
           <Input placeholder='请输入密码' />

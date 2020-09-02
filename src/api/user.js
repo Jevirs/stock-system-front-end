@@ -1,17 +1,11 @@
 import request from '@/utils/request'
 
-export function reqUserInfo(data) {
-  return request({
-    url: '/userInfo',
-    method: 'post',
-    data
-  })
-}
 
-export function getUsers() {
+export function getUsers(params) {
   return request({
     url: '/user/list',
-    method: 'get'
+    method: 'get',
+    params
   })
 }
 
@@ -31,18 +25,18 @@ export function editUser(data) {
   })
 }
 
-export function reqValidatUserID(data) {
-  return request({
-    url: '/user/validatUserID',
-    method: 'post',
-    data
-  })
-}
-
 export function addUser(data) {
   return request({
     url: '/user/add',
     method: 'post',
     data
+  })
+}
+
+export function getInfo(token) {
+  return request({
+    url: '/user/info',
+    method: 'get',
+    data: { token }
   })
 }

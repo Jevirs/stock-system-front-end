@@ -1,13 +1,13 @@
 import * as types from "../action-types";
-import { reqUserInfo } from "@/api/user";
+import { getInfo } from "@/api/user";
 
 export const getUserInfo = (token) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    reqUserInfo(token)
+    getInfo(token)
       .then((response) => {
         const { data } = response;
         if (data.status === 0) {
-          const userInfo = data.userInfo;
+          const userInfo = data.data;
           dispatch(setUserInfo(userInfo));
           resolve(data);
         } else {

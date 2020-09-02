@@ -1,29 +1,22 @@
 import Mock from "mockjs";
 import loginAPI from "./login";
-import remoteSearchAPI from "./remoteSearch";
-import excelAPI from "./excel";
-import tableAPI from "./table";
+import sectorAPI from './sector'
 
-// 登录与用户相关
+/* 登录 */
 Mock.mock(/\/login/, "post", loginAPI.login);
 Mock.mock(/\/logout/, "post", loginAPI.logout);
-Mock.mock(/\/userInfo/, "post", loginAPI.userInfo);
+
+/* 用户模块 */
+Mock.mock(/\/user\/info/, "get", loginAPI.getInfo);
 Mock.mock(/\/user\/list/, "get", loginAPI.getUsers);
 Mock.mock(/\/user\/delete/, "post", loginAPI.deleteUser);
 Mock.mock(/\/user\/edit/, "post", loginAPI.editUser);
-Mock.mock(/\/user\/validatUserID/, "post", loginAPI.ValidatUserID);
 Mock.mock(/\/user\/add/, "post", loginAPI.addUser);
 
-
-// dashboard
-Mock.mock(/\/transaction\/list/, "get", remoteSearchAPI.transactionList);
-
-// excel
-Mock.mock(/\/excel\/list/, "get", excelAPI.excelList);
-
-// table
-Mock.mock(/\/table\/list/, "post", tableAPI.tableList);
-Mock.mock(/\/table\/delete/, "post", tableAPI.deleteItem);
-Mock.mock(/\/table\/edit/, "post", tableAPI.editItem);
+/* 板块模块 */
+Mock.mock(/\/sector\/list/, "get", sectorAPI.getSector);
+Mock.mock(/\/sector\/delete/, "post", sectorAPI.deleteSector);
+Mock.mock(/\/sector\/edit/, "post", sectorAPI.editSector);
+Mock.mock(/\/sector\/add/, "post", sectorAPI.addSector);
 
 export default Mock;

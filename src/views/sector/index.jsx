@@ -6,10 +6,10 @@ import AddSectorForm from "./add-sector-form";
 import EditSectorForm from "./edit-sector-form";
 import SettingSectorForm from "./setting-sector-form";
 
-import { getUsers, editUser, deleteUser, addUser } from "@/api/user";
+import { getSector, editSector, deleteSector, addSector } from "@/api/sector";
 
 const Sector = () => {
-  const [users, setUsers] = useState([]);
+  const [sectors, setSectors] = useState([]);
   const [currentRowData, setCurrentRow] = useState({});
 
   const [editVisible, setEditVisible] = useState(false);
@@ -22,14 +22,14 @@ const Sector = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    getUserList();
+    getList();
   }, []);
 
-  const getUserList = async () => {
-    const result = await getUsers();
-    const { users, status } = result.data;
-    if (status === 0) {
-      setUsers(users);
+  const getList = async () => {
+    const result = await getSector();
+    const { code, data } = result.data;
+    if (code === 0) {
+      setSectors(data.list);
     }
   };
 
@@ -37,11 +37,11 @@ const Sector = () => {
   const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
-    addUser(value).then((res) => {
+    addSector(value).then((res) => {
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");
-      getUsers();
+      getList();
     });
   };
 
@@ -49,20 +49,20 @@ const Sector = () => {
   const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
-    editUser(value).then((res) => {
+    editSector(value).then((res) => {
       setEditLoading(false);
       setEditVisible(false);
       message.success("修改成功!");
-      getUserList();
+      getList();
     });
   };
 
   /* 删除 */
   const handleDelOk = (row) => {
     console.log(row);
-    deleteUser(row).then((res) => {
+    deleteSector(row).then((res) => {
       message.success("删除成功!");
-      getUsers();
+      getList();
     });
   };
 
@@ -109,7 +109,7 @@ const Sector = () => {
     <div className='app-container'>
       <Card title={title} extra={extra}>
         <SectorTable
-          dataSource={users}
+          dataSource={sectors}
           onEdit={(row) => {
             setCurrentRow(Object.assign({}, row));
             setEditVisible(true);

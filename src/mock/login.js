@@ -1,30 +1,31 @@
 const tokens = {
   admin: "admin-token",
-  guest: "guest-token",
-  editor: "editor-token",
+  guest: "operator-token"
 };
 
 const users = {
   "admin-token": {
-    id: "admin",
-    role: "admin",
-    name: "管理A",
-    avatar: "https://s1.ax1x.com/2020/04/28/J5hUaT.jpg",
-    description: "管理员A",
+    id: 1,
+    user_id: "1",
+    role_id: "1",
+    user_name: "管理A",
+    user_passwd: "admin123456",
+    remark: "管理员A",
   },
-  "guest-token": {
-    id: "guest",
-    role: "guest",
-    name: "操作员A",
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    description: "华西证券VIP操作员",
+  "operator-token": {
+    id: 2,
+    user_id: "2",
+    role_id: "2",
+    user_name: "操作员B",
+    user_passwd: "operator8888",
+    remark: "华西证券VIP操作员",
   },
 };
 
 export default {
   login: (config) => {
-    const { username } = JSON.parse(config.body);
-    const token = tokens[username];
+    const { user_name } = JSON.parse(config.body);
+    const token = tokens[user_name];
     if (!token) {
       return {
         status: 1,
@@ -33,72 +34,33 @@ export default {
     }
     return {
       status: 0,
-      token,
-    };
-  },
-  userInfo: (config) => {
-    const token = config.body;
-    const userInfo = users[token];
-    if (!userInfo) {
-      return {
-        status: 1,
-        message: "获取用户信息失败",
-      };
+      data: users[token]
     }
+  },
+  getInfo: (config) => {
+    const { token } = JSON.parse(config.body);
     return {
       status: 0,
-      userInfo,
-    };
+      data: users[token]
+    }
   },
   getUsers: () => {
     return {
       status: 0,
-      users: Object.values(users),
+      data: Object.values(users),
     };
   },
   deleteUser: (config) => {
-    const { id } = JSON.parse(config.body);
-    const token = tokens[id];
-    if (token) {
-      delete tokens[id];
-      delete users[token];
-    }
     return {
       status: 0,
     };
   },
   editUser: (config) => {
-    const data = JSON.parse(config.body);
-    const { id } = data;
-    const token = tokens[id];
-    if (token) {
-      users[token] = { ...users[token], ...data };
-    }
     return {
       status: 0,
     };
   },
-  ValidatUserID: (config) => {
-    const userID = config.body;
-    const token = tokens[userID];
-    if (token) {
-      return {
-        status: 1,
-      };
-    } else {
-      return {
-        status: 0,
-      };
-    }
-  },
   addUser: (config) => {
-    const data = JSON.parse(config.body);
-    const { id } = data;
-    tokens[id] = `${id}-token`;
-    users[`${id}-token`] = {
-      ...users["guest-token"],
-      ...data,
-    };
     return {
       status: 0,
     };
@@ -106,7 +68,6 @@ export default {
   logout: (_) => {
     return {
       status: 0,
-      data: "success",
     };
   },
 };

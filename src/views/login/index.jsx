@@ -4,21 +4,23 @@ import { Form, Input, Button, message, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import DocumentTitle from "react-document-title";
-import "./index.less";
 import { login, getUserInfo } from "@/store/actions";
 
+import "./index.less";
+
 const Login = (props) => {
-  const { token, login, getUserInfo } = props;
+  const { token, login } = props;
 
   const [loading, setLoading] = useState(false);
 
   const handleLogin = (username, password) => {
-    // 登录完成后 发送请求 调用接口获取用户信息
     setLoading(true);
     login(username, password)
       .then((data) => {
         message.success("登录成功");
-        handleUserInfo(data.token);
+        /* TODO */
+        const token = username + "-token";
+        getUserInfo(token);
       })
       .catch((error) => {
         setLoading(false);
@@ -26,18 +28,9 @@ const Login = (props) => {
       });
   };
 
-  // 获取用户信息
-  const handleUserInfo = (token) => {
-    getUserInfo(token)
-      .then((data) => {})
-      .catch((error) => {
-        message.error(error);
-      });
-  };
-
   const handleSubmit = (value) => {
-    const { username, password } = value;
-    handleLogin(username, password);
+    const { user_name, user_passwd } = value;
+    handleLogin(user_name, user_passwd);
   };
 
   if (token) {
@@ -52,7 +45,7 @@ const Login = (props) => {
           </div>
           <Spin spinning={loading} tip='登录中...'>
             <Form.Item
-              name='username'
+              name='user_name'
               rules={[{ required: true, message: "账号不得为空" }]}
             >
               <Input
@@ -61,7 +54,7 @@ const Login = (props) => {
               />
             </Form.Item>
             <Form.Item
-              name='password'
+              name='user_passwd'
               rules={[{ required: true, message: "密码不得为空" }]}
             >
               <Input
