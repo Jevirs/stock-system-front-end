@@ -1,19 +1,26 @@
-import React from "react";
-import { Card, Space } from "antd";
-import AccountList from "./account-list";
-import AccountInfo from "./account-info";
+import React, { useState } from "react";
+import { Space } from "antd";
+import { connect } from "react-redux";
+
+import AccountList from "./AccountList";
+import AccountTable from "./AccountTable";
 
 const Trade = (props) => {
+  const { role } = props;
+  const [account, setAccount] = useState({});
+
+  const handleSelect = (account) => {
+    setAccount(Object.assign({}, account));
+  };
+
   return (
     <div className='app-container'>
       <Space direction='horizontal' align='top'>
-        <Card>
-          <AccountList />
-        </Card>
-        <Card title={<AccountInfo />}></Card>
+        {role === "admin" ? <AccountList onSelect={handleSelect} /> : null}
+        <AccountTable account={account} />
       </Space>
     </div>
   );
 };
 
-export default Trade;
+export default connect((state) => state.user)(Trade);

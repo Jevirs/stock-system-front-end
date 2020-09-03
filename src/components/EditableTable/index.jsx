@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Table, Form, Input } from "antd";
+import { Table, Form } from "antd";
 
 const EditableTable = (props) => {
   const {

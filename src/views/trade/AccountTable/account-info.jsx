@@ -1,10 +1,17 @@
 import React from "react";
 import { Descriptions } from "antd";
 import { formatNumber } from "@/utils";
+import { useEffect } from "react";
 
-const AccountInfo = () => {
+const AccountInfo = (props) => {
+  const { account } = props;
+
+  useEffect(() => {
+    console.log("account change & get accountInfo");
+  }, [account]);
+
   return (
-    <Descriptions title='账户一' column={5}>
+    <Descriptions title={account.name}>
       <Descriptions.Item label='账户名称'></Descriptions.Item>
       <Descriptions.Item label='总资产'>
         {formatNumber(19000000)}
