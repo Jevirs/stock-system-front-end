@@ -70,7 +70,10 @@ const AccountList = (props) => {
   const { onSelect } = props;
 
   useEffect(() => {
-    onSelect(data[0]);
+    console.log("get accountList & select the first one");
+    setTimeout(() => {
+      onSelect(data[0]);
+    }, 1500);
   }, []);
 
   return (
