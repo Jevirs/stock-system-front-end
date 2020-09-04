@@ -22,7 +22,7 @@ const menuList = [
     title: "交易管理",
     path: "/trade",
     icon: PayCircleOutlined,
-    roles: ["admin", "guest"]
+    roles: ["admin", "operator"]
   },
   {
     title: "板块管理",

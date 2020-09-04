@@ -4,10 +4,19 @@ import { connect } from "react-redux";
 
 import AccountList from "./AccountList";
 import AccountTable from "./AccountTable";
+import { useEffect } from "react";
 
 const Trade = (props) => {
   const { role } = props;
   const [account, setAccount] = useState({});
+
+  useEffect(() => {
+    if (role !== "admin") {
+      handleSelect({
+        name: "操作账号A",
+      });
+    }
+  }, []);
 
   const handleSelect = (account) => {
     setAccount(Object.assign({}, account));

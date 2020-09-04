@@ -1,6 +1,6 @@
 const tokens = {
   admin: "admin-token",
-  guest: "operator-token"
+  operator: "operator-token"
 };
 
 const users = {

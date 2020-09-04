@@ -113,6 +113,9 @@ const LayoutHeader = (props) => {
         visible={resetVisible}
         onOk={() => {
           setResetVisible(false);
+          setTimeout(() => {
+            logout(token);
+          }, 1500);
         }}
         onCancel={() => {
           setResetVisible(false);

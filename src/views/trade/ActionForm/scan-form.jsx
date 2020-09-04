@@ -2,7 +2,7 @@ import React from "react";
 import { Form, InputNumber, Card, Button } from "antd";
 
 const ScanForm = (props) => {
-  const { actionType, onSubmit } = props;
+  const { confirmLoading, actionType, onSubmit } = props;
   const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: {
@@ -91,7 +91,12 @@ const ScanForm = (props) => {
           <span> 手</span>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 8 }}>
-          <Button type='primary' htmlType='submit' size='large'>
+          <Button
+            type='primary'
+            htmlType='submit'
+            size='large'
+            loading={confirmLoading}
+          >
             {actionType === "buy" ? "扫单买入" : "扫单卖出"}
           </Button>
         </Form.Item>

@@ -74,7 +74,6 @@ const EditableTable = (props) => {
         >
           {inputRender({
             ref: inputRef,
-            onPressEnter: save,
             onBlur: save,
           })}
         </Form.Item>
@@ -95,23 +94,35 @@ const EditableTable = (props) => {
     },
   };
 
-  const wrapColumns = columns.map((col) => {
-    if (!col.editable) {
+  const getColumn = (col) => {
+    if (col.children) {
+      let children = col.children.map((item) => {
+        return getColumn(item);
+      });
+      col.children = children;
       return col;
-    }
+    } else {
+      if (!col.editable) {
+        return col;
+      }
 
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        rules: col.rules,
-        handleSave: col.handleSave,
-        inputRender: col.inputRender,
-      }),
-    };
+      return {
+        ...col,
+        onCell: (record) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          rules: col.rules,
+          handleSave: col.handleSave,
+          inputRender: col.inputRender,
+        }),
+      };
+    }
+  };
+
+  const wrapColumns = columns.map((col) => {
+    return getColumn(col);
   });
 
   return (

@@ -1,200 +1,187 @@
 import React, { useState, useEffect } from "react";
-import { Input, Space, Button } from "antd";
+import { Input, Space, Button, Select, InputNumber, message } from "antd";
 import EditableTable from "@/components/EditableTable";
 import ActionForm from "../ActionForm";
 import { formatNumber } from "@/utils";
 
 const data = [
   {
-    id: "5f50b8ea5b6ac30aa67c614f",
-    name: "Miles",
-    code: 600202,
-    level: 3,
-    amount: 319699,
-    plan:
-      "Irure officia eu fugiat dolore nostrud consectetur non laborum do esse.",
-    avg_price: 6045,
-    now_price: 9901,
-  },
-  {
-    id: "5f50b8ea552472de49e37954",
-    name: "Frost",
-    code: 600617,
-    level: 2,
-    amount: 212069,
-    plan:
-      "Veniam et do eu minim tempor occaecat elit adipisicing dolor non ut sunt eu duis.",
-    avg_price: 5774,
-    now_price: 3522,
-  },
-  {
-    id: "5f50b8ea759a7a80f5f04e76",
-    name: "Cain",
+    id: "5f51a6c6447c642795738aa4",
+    name: "Cotton",
     code: 600140,
     level: 3,
-    amount: 377583,
-    plan:
-      "Voluptate aliquip esse in culpa ullamco aute dolor pariatur amet anim ea.",
-    avg_price: 6627,
-    now_price: 6152,
+    amount: 281510,
+    plan_action: true,
+    plan_amount: 45923,
+    avg_price: 9898,
+    now_price: 8266,
   },
   {
-    id: "5f50b8eafb97abc9b1614c39",
-    name: "Sears",
-    code: 600136,
+    id: "5f51a6c699c79163b24205a5",
+    name: "Calhoun",
+    code: 600634,
     level: 1,
-    amount: 318365,
-    plan: "Ex laboris reprehenderit aliqua dolore sunt dolor ipsum.",
-    avg_price: 2970,
-    now_price: 9281,
+    amount: 755836,
+    plan_action: true,
+    plan_amount: 99685,
+    avg_price: 4575,
+    now_price: 6864,
   },
   {
-    id: "5f50b8eaa49f48ab156570f0",
-    name: "Mckee",
-    code: 600450,
+    id: "5f51a6c665ad4e8b717af62b",
+    name: "Navarro",
+    code: 600076,
     level: 2,
-    amount: 751769,
-    plan: "Esse cupidatat pariatur est ullamco et.",
-    avg_price: 8009,
-    now_price: 9300,
+    amount: 715595,
+    plan_action: true,
+    plan_amount: 21984,
+    avg_price: 7956,
+    now_price: 1906,
   },
   {
-    id: "5f50b8eaed34a3424d9f48ba",
-    name: "Bowers",
-    code: 600097,
-    level: 3,
-    amount: 180375,
-    plan: "Laborum cupidatat nostrud id pariatur amet magna sint.",
-    avg_price: 2874,
-    now_price: 4566,
-  },
-  {
-    id: "5f50b8ea3edcfc7268e772df",
-    name: "Clemons",
-    code: 600203,
-    level: 1,
-    amount: 120438,
-    plan:
-      "Culpa sint quis aute reprehenderit in quis voluptate pariatur sit elit ullamco amet id incididunt.",
-    avg_price: 6505,
-    now_price: 2070,
-  },
-  {
-    id: "5f50b8ea00f6c8ba941215b4",
-    name: "Joseph",
-    code: 600534,
+    id: "5f51a6c69bb8c249130abdc1",
+    name: "Hensley",
+    code: 600640,
     level: 2,
-    amount: 836717,
-    plan: "Proident culpa voluptate fugiat incididunt dolor.",
-    avg_price: 6408,
-    now_price: 7597,
+    amount: 713268,
+    plan_action: false,
+    plan_amount: 7436,
+    avg_price: 2034,
+    now_price: 4143,
   },
   {
-    id: "5f50b8ea1d936bd392dba9a9",
-    name: "Norton",
-    code: 600543,
+    id: "5f51a6c6df2ca13a9fe3eb59",
+    name: "Caldwell",
+    code: 600456,
     level: 3,
-    amount: 619149,
-    plan:
-      "Mollit nisi dolor duis irure excepteur quis mollit aute proident cillum culpa cupidatat minim.",
-    avg_price: 5006,
-    now_price: 4402,
+    amount: 136206,
+    plan_action: true,
+    plan_amount: 65565,
+    avg_price: 6337,
+    now_price: 7322,
   },
   {
-    id: "5f50b8eadfe7fda8ab6c4a7e",
-    name: "Savage",
-    code: 600186,
+    id: "5f51a6c60fda4d8c824f2c3a",
+    name: "York",
+    code: 600431,
+    level: 3,
+    amount: 721972,
+    plan_action: true,
+    plan_amount: 38225,
+    avg_price: 5134,
+    now_price: 4916,
+  },
+  {
+    id: "5f51a6c6a1043f88735010af",
+    name: "Whitfield",
+    code: 600052,
     level: 1,
-    amount: 350919,
-    plan: "Excepteur elit voluptate ipsum ex ex ut.",
-    avg_price: 8199,
-    now_price: 6003,
+    amount: 389904,
+    plan_action: false,
+    plan_amount: 25853,
+    avg_price: 2837,
+    now_price: 3739,
   },
   {
-    id: "5f50b8ea60594f9b5216dbbd",
-    name: "Holloway",
-    code: 600295,
+    id: "5f51a6c6aadae8c88922531d",
+    name: "Glover",
+    code: 600408,
+    level: 3,
+    amount: 523613,
+    plan_action: false,
+    plan_amount: 81390,
+    avg_price: 7966,
+    now_price: 5943,
+  },
+  {
+    id: "5f51a6c68c4f77f2e4a50635",
+    name: "Robinson",
+    code: 600169,
+    level: 3,
+    amount: 194885,
+    plan_action: false,
+    plan_amount: 23788,
+    avg_price: 5768,
+    now_price: 8687,
+  },
+  {
+    id: "5f51a6c6c7be5a4448e6560a",
+    name: "Copeland",
+    code: 600637,
+    level: 1,
+    amount: 516712,
+    plan_action: true,
+    plan_amount: 22850,
+    avg_price: 8325,
+    now_price: 4926,
+  },
+  {
+    id: "5f51a6c63a30d242004354c3",
+    name: "Whitley",
+    code: 600028,
     level: 2,
-    amount: 662509,
-    plan: "Cillum elit ex culpa et tempor Lorem est pariatur ad veniam culpa.",
-    avg_price: 6590,
-    now_price: 6077,
+    amount: 986100,
+    plan_action: true,
+    plan_amount: 32503,
+    avg_price: 8859,
+    now_price: 6786,
   },
   {
-    id: "5f50b8eafda77130ea3f00c4",
-    name: "Tyler",
-    code: 600064,
-    level: 1,
-    amount: 379250,
-    plan: "Excepteur nisi labore veniam incididunt mollit ea duis.",
-    avg_price: 5072,
-    now_price: 8506,
-  },
-  {
-    id: "5f50b8eab7791e65ac29f39c",
-    name: "Parks",
-    code: 600436,
+    id: "5f51a6c6ac073453c2ba5074",
+    name: "Lancaster",
+    code: 600421,
     level: 3,
-    amount: 152093,
-    plan: "Qui pariatur duis culpa dolore dolore sint ut.",
-    avg_price: 9064,
-    now_price: 1204,
+    amount: 226254,
+    plan_action: true,
+    plan_amount: 1726,
+    avg_price: 5734,
+    now_price: 9623,
   },
   {
-    id: "5f50b8eae26982827558fde5",
-    name: "Giles",
-    code: 600239,
+    id: "5f51a6c6ca35c1acbbffea07",
+    name: "Armstrong",
+    code: 600139,
     level: 2,
-    amount: 977802,
-    plan: "Excepteur esse sunt eiusmod eu mollit.",
-    avg_price: 7285,
-    now_price: 4706,
+    amount: 271882,
+    plan_action: true,
+    plan_amount: 28097,
+    avg_price: 9929,
+    now_price: 6397,
   },
   {
-    id: "5f50b8eaee7ad9ccc6b628cf",
-    name: "Haney",
-    code: 600449,
-    level: 3,
-    amount: 822962,
-    plan:
-      "Consectetur culpa do ut nostrud id cillum consequat qui veniam officia dolor id eiusmod.",
-    avg_price: 3651,
-    now_price: 1254,
-  },
-  {
-    id: "5f50b8ea02323073f1e5b0c8",
-    name: "Underwood",
-    code: 600574,
-    level: 3,
-    amount: 729669,
-    plan:
-      "Minim eu et aliquip eiusmod nisi adipisicing nulla velit excepteur commodo sint incididunt aliqua.",
-    avg_price: 2011,
-    now_price: 2306,
-  },
-  {
-    id: "5f50b8ea7fe930593bb7e80b",
-    name: "White",
-    code: 600038,
-    level: 3,
-    amount: 843132,
-    plan: "Eu minim pariatur mollit nulla.",
-    avg_price: 5619,
-    now_price: 3125,
-  },
-  {
-    id: "5f50b8ea78afbad512a2329e",
-    name: "Franco",
-    code: 600114,
+    id: "5f51a6c69c45496317dff194",
+    name: "Pratt",
+    code: 600045,
     level: 1,
-    amount: 543153,
-    plan:
-      "Officia pariatur sit dolor anim consequat ea duis minim ea incididunt voluptate.",
-    avg_price: 1397,
-    now_price: 5995,
+    amount: 177699,
+    plan_action: true,
+    plan_amount: 38565,
+    avg_price: 3778,
+    now_price: 5151,
+  },
+  {
+    id: "5f51a6c6294416e9ada7df3b",
+    name: "Gallegos",
+    code: 600001,
+    level: 3,
+    amount: 436120,
+    plan_action: false,
+    plan_amount: 38971,
+    avg_price: 7402,
+    now_price: 8014,
+  },
+  {
+    id: "5f51a6c65ce3eafb6df39239",
+    name: "Malone",
+    code: 600563,
+    level: 2,
+    amount: 231881,
+    plan_action: true,
+    plan_amount: 17684,
+    avg_price: 7500,
+    now_price: 5754,
   },
 ];
-
 const StockTable = (props) => {
   const { account } = props;
   const [stockList, setStockList] = useState([]);
@@ -226,34 +213,115 @@ const StockTable = (props) => {
     {
       title: "持仓金额",
       dataIndex: "amount",
-      align: "center",
+      align: "right",
       render: (text) => {
         return formatNumber(text);
       },
     },
     {
       title: "计划",
-      dataIndex: "plan",
-      align: "center",
+      children: [
+        {
+          title: "方向",
+          dataIndex: "plan_action",
+          align: "center",
+          width: 100,
+          editable: true,
+          render: (text) => {
+            if (text) {
+              return "增持";
+            } else {
+              return "减持";
+            }
+          },
+          rules: [{ required: true }],
+          handleSave: (row) => {
+            console.log(row);
+            const newData = [...data];
+            const index = newData.findIndex((item) => row.id === item.id);
+            const item = newData[index];
+            newData.splice(index, 1, { ...item, ...row });
+            setStockList(newData);
+            message.success("计划方向修改成功");
+          },
+          inputRender: (props) => {
+            return (
+              <Select {...props}>
+                <Select.Option value={true}>增持</Select.Option>
+                <Select.Option value={false}>减持</Select.Option>
+              </Select>
+            );
+          },
+        },
+        {
+          title: "金额",
+          dataIndex: "plan_amount",
+          width: 100,
+          align: "right",
+          editable: true,
+          render: (text) => {
+            return formatNumber(text);
+          },
+          rules: [{ required: true }],
+          handleSave: (row) => {
+            console.log(row);
+            const newData = [...data];
+            const index = newData.findIndex((item) => row.id === item.id);
+            const item = newData[index];
+            newData.splice(index, 1, { ...item, ...row });
+            setStockList(newData);
+            message.success("计划金额修改成功");
+          },
+          inputRender: (props) => {
+            return (
+              <InputNumber
+                step={1000}
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                {...props}
+              />
+            );
+          },
+        },
+      ],
     },
     {
       title: "买入均价",
       dataIndex: "avg_price",
-      align: "center",
+      align: "right",
       editable: true,
       render: (text) => {
         return formatNumber(text);
       },
       rules: [{ required: true }],
-      handleSave: () => {},
-      inputRender: () => {
-        return <Input />;
+      handleSave: (row) => {
+        console.log(row);
+        const newData = [...data];
+        const index = newData.findIndex((item) => row.id === item.id);
+        const item = newData[index];
+        newData.splice(index, 1, { ...item, ...row });
+        setStockList(newData);
+        message.success("买入均价修改成功");
+      },
+      inputRender: (props) => {
+        return (
+          <InputNumber
+            step={1000}
+            formatter={(value) =>
+              `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            {...props}
+          />
+        );
       },
     },
     {
       title: "现价",
       dataIndex: "now_price",
-      align: "center",
+      align: "right",
       render: (text) => {
         return formatNumber(text);
       },

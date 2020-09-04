@@ -11,7 +11,7 @@ const Error404 = Loadable({ loader: () => import(/*webpackChunkName:'Error404'*/
 export default [
   { path: "/dashboard", component: Dashboard, roles: ["admin"] },
   { path: "/user", component: User, roles: ["admin"] },
-  { path: "/trade", component: Trade, roles: ["admin", "guest"] },
+  { path: "/trade", component: Trade, roles: ["admin", "operator"] },
   { path: "/account", component: Account, roles: ["admin"] },
   { path: "/sector", component: Sector, roles: ["admin"] },
   { path: "/error/404", component: Error404 },

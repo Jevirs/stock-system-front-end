@@ -2,7 +2,7 @@ import React from "react";
 import { Form, InputNumber, Card, Button } from "antd";
 
 const TradeForm = (props) => {
-  const { actionType, onSubmit } = props;
+  const { confirmLoading, actionType, onSubmit } = props;
   const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: {
@@ -58,7 +58,12 @@ const TradeForm = (props) => {
         <Form.Item />
         <Form.Item />
         <Form.Item wrapperCol={{ span: 12, offset: 8 }}>
-          <Button type='danger' htmlType='submit' size='large'>
+          <Button
+            type='danger'
+            htmlType='submit'
+            size='large'
+            loading={confirmLoading}
+          >
             {actionType === "buy" ? "立即买入" : "立即卖出"}
           </Button>
         </Form.Item>
