@@ -61,13 +61,13 @@ const AddUserForm = (props) => {
             })}
           </Select>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label='用户密码:'
           name='user_passwd'
           rules={[{ required: true, message: "请设置用户密码" }]}
         >
           <Input placeholder='请输入用户密码' />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label='备注:' name='remark'>
           <TextArea rows={4} placeholder='请输入用户描述' />
         </Form.Item>

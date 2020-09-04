@@ -84,7 +84,7 @@ const AddPlanForm = (props) => {
       width: "35%",
       title: "计划买入仓位",
       dataIndex: "position",
-      align: "right",
+      align: "center",
       editable: true,
       render: (text) => {
         return formatNumber(text);

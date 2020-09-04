@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Input, Modal, DatePicker } from "antd";
-
+import moment from "moment";
 const { TextArea } = Input;
 
 const AddSectorForm = (props) => {
@@ -19,6 +19,7 @@ const AddSectorForm = (props) => {
     if (visible) {
       form.setFieldsValue({
         ...currentRowData,
+        time: moment(currentRowData.time),
       });
     }
   }, [form, visible, currentRowData]);

@@ -6,8 +6,6 @@ import AddAccountForm from "./add-account-form";
 import EditAccountForm from "./edit-account-form";
 import DetailTable from "./detail-table";
 
-import { getUsers, addUser } from "@/api/account";
-
 const data = [
   {
     account: 8134253059,
@@ -269,7 +267,6 @@ const data = [
 const StatisticGroup = (props) => {
   const [users, setUsers] = useState([]);
   const [viewVisible, setViewVisible] = useState(false);
-  const [viewLoading, setViewLoading] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
@@ -282,11 +279,7 @@ const StatisticGroup = (props) => {
   }, []);
 
   const getUserList = async () => {
-    const result = await getUsers();
-    const { users, status } = result.data;
-    if (status === 0) {
-      setUsers(users);
-    }
+    setUsers(data);
   };
 
   const handleQuery = () => {
@@ -298,33 +291,33 @@ const StatisticGroup = (props) => {
   const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
-    addUser(value).then((res) => {
+    setTimeout(() => {
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");
       getUserList();
-    });
+    }, 1000);
   };
 
   const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
-    addUser(value).then((res) => {
+    setTimeout(() => {
       setEditVisible(false);
       setEditLoading(false);
       message.success("编辑成功!");
       getUserList();
-    });
+    }, 1000);
   };
 
   const handleDelete = (value) => {
     if (value.money > 0) {
       message.warn("此账户仍有持仓，无法删除");
     } else {
-      addUser(value).then((res) => {
-        message.success("删除!");
+      setTimeout(() => {
+        message.success("删除成功!");
         getUserList();
-      });
+      }, 1000);
     }
   };
 
@@ -413,13 +406,10 @@ const StatisticGroup = (props) => {
       <DetailTable
         currentRowData={currentRow}
         visible={viewVisible}
-        loading={viewLoading}
         onCancel={() => {
           setViewVisible(false);
         }}
-        onOk={(value) => {
-          console.log(value);
-          setViewLoading(true);
+        onOk={() => {
           setViewVisible(false);
         }}
       />

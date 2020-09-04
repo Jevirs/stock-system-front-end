@@ -2,6 +2,7 @@ import React from "react";
 import { Card, List, Button, Descriptions } from "antd";
 import { formatNumber } from "@/utils";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const data = [
   {
@@ -68,10 +69,12 @@ const data = [
 
 const AccountList = (props) => {
   const { onSelect } = props;
+  const [accountList, setAccountList] = useState([]);
 
   useEffect(() => {
     console.log("get accountList & select the first one");
     setTimeout(() => {
+      setAccountList(data);
       onSelect(data[0]);
     }, 1500);
   }, []);
@@ -81,7 +84,7 @@ const AccountList = (props) => {
       <List
         style={{ height: "80vh", width: "200px", overflow: "auto" }}
         itemLayout='vertical'
-        dataSource={data}
+        dataSource={accountList}
         renderItem={(item) => (
           <List.Item
             actions={[

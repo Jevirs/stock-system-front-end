@@ -1,117 +1,58 @@
-import React, { useState } from "react";
-import { Modal, Rate, Select, Input } from "antd";
-import TableTransfer from "./table-transfer";
+import React from "react";
+import { Modal } from "antd";
+import TransferSourceTable from "./transfer-source-table";
+import TransferTargetTable from "./transfer-target-table";
+import { useState } from "react";
 
 const SettingSectorForm = (props) => {
   const { visible, onCancel, onOk, confirmLoading } = props;
+  const [selectedList, setSelectedList] = useState([]);
 
-  const mockData = [];
-  for (let i = 0; i < 20; i++) {
-    mockData.push({
-      key: i.toString(),
-      code: `6000${i + 1}`,
-      name: `股票${i}`,
-    });
-  }
+  const handleSelect = (row) => {
+    const newData = [...selectedList];
+    newData.push(Object.assign({}, row));
+    setSelectedList(newData);
+  };
 
-  const originTargetKeys = mockData
-    .filter((item) => +item.key % 3 > 1)
-    .map((item) => item.key);
+  const handleRemove = (row) => {
+    const newData = [...selectedList];
+    const index = newData.findIndex((item) => row.id === item.id);
+    newData.splice(index, 1);
+    setSelectedList(newData);
+  };
 
-  const [targetKeys, setTargetKeys] = useState(originTargetKeys);
+  const handleUpdate = (row) => {
+    const newData = [...selectedList];
+    const index = newData.findIndex((item) => row.id === item.id);
+    const item = newData[index];
+    newData.splice(index, 1, { ...item, ...row });
+    setSelectedList(newData);
+  };
 
-  const leftTableColumns = [
-    {
-      dataIndex: "code",
-      title: "股票代码",
-    },
-    {
-      dataIndex: "name",
-      title: "股票名称",
-    },
-  ];
-  const rightTableColumns = [
-    {
-      dataIndex: "code",
-      title: "股票代码",
-    },
-    {
-      dataIndex: "name",
-      title: "股票名称",
-    },
-    {
-      editable: true,
-      title: "优先级",
-      dataIndex: "level",
-      align: "center",
-      render: (value) => {
-        return "低";
-      },
-      handleSave: (row) => {
-        const newData = [...targetKeys];
-        const index = newData.findIndex((item) => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setTargetKeys(newData);
-      },
-      inputRender: (props) => {
-        return (
-          <Select {...props}>
-            <Select.Option>低</Select.Option>
-            <Select.Option>中</Select.Option>
-            <Select.Option>高</Select.Option>
-          </Select>
-        );
-      },
-    },
-    {
-      editable: true,
-      title: "计划",
-      dataIndex: "plan",
-      align: "center",
-      render: (value) => {
-        return value;
-      },
-      handleSave: (row) => {
-        const newData = [...targetKeys];
-        const index = newData.findIndex((item) => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setTargetKeys(newData);
-      },
-      inputRender: (props) => {
-        return <Input {...props} />;
-      },
-    },
-  ];
-
-  const onChange = (nextTargetKeys) => {
-    setTargetKeys(nextTargetKeys);
+  const handleSubmit = () => {
+    console.log(selectedList);
+    onOk(selectedList);
   };
 
   return (
     <Modal
-      width='90%'
+      width='720px'
       title='编辑股票池'
       visible={visible}
       onCancel={onCancel}
-      onOk={onOk}
+      onOk={handleSubmit}
       confirmLoading={confirmLoading}
       destroyOnClose={true}
     >
-      <TableTransfer
-        dataSource={mockData}
-        targetKeys={targetKeys}
-        onChange={onChange}
-        showSearch={true}
-        filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 ||
-          item.tag.indexOf(inputValue) !== -1
-        }
-        leftColumns={leftTableColumns}
-        rightColumns={rightTableColumns}
-        operations={["添加", "移除"]}
-        titles={["所有股票", "选中股票"]}
+      <TransferSourceTable
+        selectedList={selectedList}
+        onSelect={handleSelect}
+        onRemove={handleRemove}
+      />
+      <TransferTargetTable
+        selectedList={selectedList}
+        onUpdate={handleUpdate}
+        onRemove={handleRemove}
       />
     </Modal>
   );

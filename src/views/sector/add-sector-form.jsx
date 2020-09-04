@@ -19,7 +19,7 @@ const AddSectorForm = (props) => {
     form
       .validateFields()
       .then((values) => {
-        onOk({ ...values, time: values.time.format("yyyy-MM-DD HH:mm:ss") });
+        onOk({ ...values, time: values.time.format("yyyy-MM-DD") });
       })
       .catch((info) => {
         console.log("Validate Failed:", info);

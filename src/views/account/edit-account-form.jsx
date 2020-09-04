@@ -16,7 +16,6 @@ const EditAccountForm = (props) => {
 
   useEffect(() => {
     if (visible) {
-      console.log(currentRowData);
       form.setFieldsValue({
         ...currentRowData,
       });

@@ -257,7 +257,7 @@ const StockTable = (props) => {
           title: "金额",
           dataIndex: "plan_amount",
           width: 100,
-          align: "right",
+          align: "center",
           editable: true,
           render: (text) => {
             return formatNumber(text);
@@ -290,7 +290,7 @@ const StockTable = (props) => {
     {
       title: "买入均价",
       dataIndex: "avg_price",
-      align: "right",
+      align: "center",
       editable: true,
       render: (text) => {
         return formatNumber(text);

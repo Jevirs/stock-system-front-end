@@ -63,13 +63,13 @@ const EditUserForm = (props) => {
             <Select.Option value='2'>交易员</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label='用户密码:'
           name='user_passwd'
           rules={[{ required: true, message: "请设置用户密码" }]}
         >
           <Input placeholder='请输入密码' />
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item label='用户描述:' name='remark'>
           <TextArea rows={4} placeholder='请输入用户描述' />
         </Form.Item>

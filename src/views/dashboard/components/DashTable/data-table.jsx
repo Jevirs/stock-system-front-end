@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button } from "antd";
+import { Table, Button, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { formatNumber } from "@/utils";
 
@@ -41,14 +41,18 @@ const dataTable = (props) => {
             align='center'
             render={() => {
               return (
-                <Button
-                  type='primary'
-                  shape='circle'
-                  icon={<EditOutlined />}
-                  onClick={() => {
-                    onEdit(record);
-                  }}
-                />
+                <Space>
+                  <span>增持 100000</span>
+                  <Button
+                    size='small'
+                    type='primary'
+                    shape='circle'
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      onEdit(record);
+                    }}
+                  />
+                </Space>
               );
             }}
           />

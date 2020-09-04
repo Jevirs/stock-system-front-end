@@ -6,8 +6,44 @@ import AddSectorForm from "./add-sector-form";
 import EditSectorForm from "./edit-sector-form";
 import SettingSectorForm from "./setting-sector-form";
 
-import { getSector, editSector, deleteSector, addSector } from "@/api/sector";
-
+const data = [
+  {
+    id: "5f51b6b15f8ebaa2b1b07ac7",
+    name: "Deleon",
+    time: "2014-10-25",
+    remark: "Micronesia",
+  },
+  {
+    id: "5f51b6b12d72575b35928943",
+    name: "Potter",
+    time: "2014-08-02",
+    remark: "Ecuador",
+  },
+  {
+    id: "5f51b6b164f25dfbeea7f7e6",
+    name: "Savage",
+    time: "2017-07-01",
+    remark: "Korea (North)",
+  },
+  {
+    id: "5f51b6b13caa9916b0043413",
+    name: "Franklin",
+    time: "2020-07-12",
+    remark: "Colombia",
+  },
+  {
+    id: "5f51b6b1a4fbe978938dec8f",
+    name: "Gallegos",
+    time: "2020-08-22",
+    remark: "Tonga",
+  },
+  {
+    id: "5f51b6b14b596cb321a21cca",
+    name: "Pollard",
+    time: "2014-09-03",
+    remark: "Ghana",
+  },
+];
 const Sector = () => {
   const [sectors, setSectors] = useState([]);
   const [currentRowData, setCurrentRow] = useState({});
@@ -26,44 +62,52 @@ const Sector = () => {
   }, []);
 
   const getList = async () => {
-    const result = await getSector();
-    const { code, data } = result.data;
-    if (code === 0) {
-      setSectors(data.list);
-    }
+    setSectors(data);
   };
 
   /* 新增 */
   const handleAddOk = (value) => {
     console.log(value);
     setAddLoading(true);
-    addSector(value).then((res) => {
+    setTimeout(() => {
       setAddVisible(false);
       setAddLoading(false);
       message.success("添加成功!");
       getList();
-    });
+    }, 1000);
   };
 
   /* 编辑 */
   const handleEditOk = (value) => {
     console.log(value);
     setEditLoading(true);
-    editSector(value).then((res) => {
+    setTimeout(() => {
       setEditLoading(false);
       setEditVisible(false);
       message.success("修改成功!");
       getList();
-    });
+    }, 1000);
   };
 
   /* 删除 */
   const handleDelOk = (row) => {
     console.log(row);
-    deleteSector(row).then((res) => {
+    setTimeout(() => {
       message.success("删除成功!");
       getList();
-    });
+    }, 1000);
+  };
+
+  /* 配置 */
+  const handleSettingOk = (data) => {
+    console.log(data);
+    setSettingLoading(true);
+    setTimeout(() => {
+      setSettingVisible(false);
+      setSettingLoading(false);
+      message.success("配置成功!");
+      getList();
+    }, 1000);
   };
 
   const title = (
@@ -147,9 +191,7 @@ const Sector = () => {
         onCancel={() => {
           setSettingVisible(false);
         }}
-        onOk={(row) => {
-          console.log(row);
-        }}
+        onOk={handleSettingOk}
       />
     </div>
   );
